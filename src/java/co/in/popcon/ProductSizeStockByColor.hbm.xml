@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated May 29, 2016 4:19:39 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="co.in.popcon.ProductSizeStockByColor" table="product_size_stock_by_color" catalog="popconco_popcon" optimistic-lock="version">
+        <id name="id" type="int">
+            <column name="id" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="productByColour" class="co.in.popcon.ProductByColour" fetch="select">
+            <column name="product_by_colour_id" not-null="true" />
+        </many-to-one>
+        <many-to-one name="productSize" class="co.in.popcon.ProductSize" fetch="select">
+            <column name="product_size_id" not-null="true" />
+        </many-to-one>
+        <property name="stock" type="int">
+            <column name="stock" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>
