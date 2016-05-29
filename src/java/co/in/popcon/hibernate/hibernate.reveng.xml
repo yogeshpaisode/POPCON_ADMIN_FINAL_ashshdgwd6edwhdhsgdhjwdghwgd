@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE hibernate-reverse-engineering PUBLIC "-//Hibernate/Hibernate Reverse Engineering DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-reverse-engineering-3.0.dtd">
 <hibernate-reverse-engineering>
-  <schema-selection match-catalog="popconco_popcon"/>
+  <schema-selection match-catalog="popconco_popconco"/>
   <table-filter match-name="product_by_colour_images"/>
   <table-filter match-name="second_subcategory"/>
-  <table-filter match-name="main_category"/>
   <table-filter match-name="first_subcategory"/>
   <table-filter match-name="product_by_colour"/>
-  <table-filter match-name="product_size"/>
-  <table-filter match-name="product_size_stock_by_color"/>
   <table-filter match-name="product_detail"/>
+  <table-filter match-name="main_category"/>
+  <table-filter match-name="product_size_stock_by_color"/>
+  <table-filter match-name="product_size"/>
 </hibernate-reverse-engineering>

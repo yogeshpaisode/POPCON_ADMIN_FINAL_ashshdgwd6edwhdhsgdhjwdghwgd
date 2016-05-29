@@ -1,16 +1,16 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated May 29, 2016 4:19:39 PM by Hibernate Tools 4.3.1 -->
+<!-- Generated May 29, 2016 6:12:56 PM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
-    <class name="co.in.popcon.ProductByColourImages" table="product_by_colour_images" catalog="popconco_popcon" optimistic-lock="version">
-        <id name="id" type="int">
+    <class name="co.in.popcon.hibernate.ProductByColourImages" table="product_by_colour_images" catalog="popconco_popconco" optimistic-lock="version">
+        <id name="id" type="java.lang.Integer">
             <column name="id" />
-            <generator class="assigned" />
+            <generator class="identity" />
         </id>
-        <many-to-one name="productByColour" class="co.in.popcon.ProductByColour" fetch="select">
+        <property name="productByColourId" type="int">
             <column name="product_by_colour_id" not-null="true" />
-        </many-to-one>
+        </property>
         <property name="image" type="string">
             <column name="image" length="65535" not-null="true" />
         </property>
