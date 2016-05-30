@@ -12,7 +12,7 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <form action="add_Main_Category_API.jsp" method="post">
+        <form action="add_Main_Category_API.jsp" method="put">
             <input type="text" name="name">
             <input type="submit"/>
         </form>

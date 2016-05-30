@@ -5,6 +5,8 @@
 <%@page import="co.in.popcon.hibernate.*"%>
 <%
     response.setHeader("Access-Control-Allow-Origin", "*");
+    response.setHeader("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT, OPTIONS"); 
+    response.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     boolean flag=false;
     String error="";
     SessionFactory sessionFactory=null;
@@ -16,7 +18,7 @@
         hib_session=sessionFactory.openSession();
         transaction=hib_session.beginTransaction();
         flag=true;
-        out.print("Success..");
+        //out.print("Success..");
     } catch (Exception e) {
         error=e.toString();
     }
