@@ -11,7 +11,7 @@
         <section>
             <div class="form-group">
                 <label>Enter Main Category Name Ex: Man</label>
-                <input type="text" ng-model="form.name" class="form-control" placeholder="">
+                <input type="text" ng-model="mainCategory.name" class="form-control" placeholder="">
             </div>
             <button type="submit" class="btn btn-primary" ng-click="post();">Add Category</button>
         </section>
@@ -29,58 +29,48 @@
             <tbody>
                 <tr ng-repeat="l in list">
                     <td>{{($index + 1)}}</td>
-                    <td><input type="text" value="{{l.name}}"></td>
-                    <td><input type="text" value="{{l.id}}" hidden=""><button ng-click="put($index);">Update</button></td></td>
+                    <td><input type="text" value="{{l.name}}" ng-model="l.name"></td>
+                    <td><input type="text" value="{{l.id}}" hidden=""><button ng-click="put(l);">Update</button></td></td>
                 </tr>
             </tbody>
         </table>
         <script>
 
-            angular.module("popcon", [])
-                    .controller("indexCtr", ["$scope", "$http", function ($scope, $http) {
-                            var URL = "add_Main_Category_API.jsp";
+            angular.module("popcon", ["ngResource"])
+                    .factory("MainCategory", ["$resource", function ($resource) {
+                            return $resource("http://localhost:8084//webresources/main_Category_"
+                                    , null,
+                                    {
+                                        'update': {method: 'PUT'}
+                                    }
+                            );
+                        }])
+                    .controller("indexCtr", ["$scope", "$http", "MainCategory", function ($scope, $http, MainCategory) {
                             $scope.list = [];
-                            $scope.form = {};
-                            $scope.post = function () {
-                                $scope.result = "Adding New Entry..";
-                                $http({
-                                    method: 'POST',
-                                    url: URL,
-                                    params: $scope.form
-                                }).then(function successCallback(response) {
-                                    $scope.result = "Success : Last entry was added successfully..";
-                                    $scope.form.id = response.data.id;
-                                    $scope.list.push($scope.form);
-                                    $scope.form = "";
-                                }, function errorCallback(response) {
-                                    $scope.result = "Error : Something Went Wrong..";
-                                });
-                            }// End of POST
+                            $scope.mainCategory = new MainCategory();
                             $scope.get = function () {
                                 $scope.getMessage = "Getting List...";
-                                $http({
-                                    method: 'GET',
-                                    url: URL
-                                }).then(function successCallback(response) {
-                                    $scope.list = response.data;
-                                    $scope.getMessage = "Successfully fetch list";
-                                }, function errorCallback(response) {
-                                    $scope.getMessage = "Error : Something went wrong while fetching list";
+                                $scope.list = MainCategory.query(function (response) {
+                                    $scope.getMessage = "Success : fetching list";
+                                }, function (response) {
+                                    $scope.getMessage = "Error : fetching list";
                                 });
                             } //End of GET
-                            $scope.put = function (index) {
-                                var param = angular.toJson($scope.list.splice(index, 1));
-                                console.log(param);
-                                $http({
-                                    method: 'PUT',
-                                    url: URL,
-                                    data: param,
-                                    headers: {
-                                        'Content-Type': 'application/json',
-                                        'Accept': 'application/json'
-                                    }
-                                }).then(function successCallback(response) {
-                                }, function errorCallback(response) {
+                            $scope.post = function () {
+                                $scope.result = "Adding New Entry..";
+                                $scope.mainCategory.$save(function (res) {
+                                    $scope.result = "Success : Last Entry was added successfully..";
+                                    $scope.list.push({id: res.id, name: res.name});
+                                }, function () {
+                                    $scope.result = "Error : Something Went wrong..";
+                                });
+                            }// End of POST
+                            $scope.put = function (list) {
+                                console.log(angular.toJson(list));
+                                list.$update(function (res) {
+                                    console.log(res);
+                                }, function () {
+                                    alert("Error ok");
                                 });
                             }//End of PUT
                         }]);
