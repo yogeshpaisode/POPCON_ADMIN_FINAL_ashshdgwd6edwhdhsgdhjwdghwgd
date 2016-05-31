@@ -40,24 +40,16 @@
             angular.module("popcon", ["ngResource"])
                     .factory("MainCategory", ["$resource", function ($resource) {
                             return $resource("http://localhost:8084//webresources/main_Category_/:id", {id: '@id'},
-                                    {'get': {method: 'GET'},
-                                        'save'
-                                                : {method: 'POST'},
-                                        'query'
-                                                : {method: 'GET', isArray: true},
-                                        'remove'
-                                                : {method: 'DELETE'},
-                                        'delete'
-                                                : {method: 'DELETE'},
-                                        'update'
-                                                : {method: 'PUT'}}
+                                    {
+                                        'update': {method: 'PUT'}
+                                    }
                             );
                         }])
                     .controller("indexCtr", ["$scope", "$http", "MainCategory", function ($scope, $http, MainCategory) {
                             $scope.list = [];
                             $scope.mainCategory = new MainCategory();
                             $scope.get = function () {
-                                $scope.result = "Getting List...";
+                                $scope.result="Processing...";
                                 $scope.list = MainCategory.query(function (response) {
                                     $scope.result = "Success : fetching list";
                                 }, function (response) {
@@ -65,7 +57,7 @@
                                 });
                             } //End of GET
                             $scope.post = function () {
-                                $scope.result = "Adding New Entry..";
+                                $scope.result="Processing...";
                                 $scope.mainCategory.$save(function (res) {
                                     $scope.result = "Success : Last Entry was added successfully..";
                                     $scope.mainCategory.id = res.id;
@@ -76,7 +68,7 @@
                                 });
                             }// End of POST
                             $scope.put = function (list) {
-                                console.log(angular.toJson(list));
+                                $scope.result="Processing...";
                                 list.$update(function (res) {
                                     $scope.result = "Success : Last entry was Updated Successfully..";
                                 }, function () {
@@ -84,6 +76,7 @@
                                 });
                             }//End of PUT
                             $scope.delete = function (list) {
+                                $scope.result="Processing...";
                                 list.$delete(function () {
                                     $scope.result = "Success : Last Entry was deleted successfully..";
                                     $scope.get();
