@@ -55,7 +55,7 @@
                                 }, function (response) {
                                     $scope.result = "Error : fetching list";
                                 });
-                            } //End of GET
+                            }; //End of GET
                             $scope.post = function () {
                                 $scope.result="Processing...";
                                 $scope.mainCategory.$save(function (res) {
@@ -66,7 +66,7 @@
                                 }, function () {
                                     $scope.result = "Error : Something Went wrong..";
                                 });
-                            }// End of POST
+                            };// End of POST
                             $scope.put = function (list) {
                                 $scope.result="Processing...";
                                 list.$update(function (res) {
@@ -74,7 +74,7 @@
                                 }, function () {
                                     $scope.result = "Error ; Something went wrong while Updating last entry..";
                                 });
-                            }//End of PUT
+                            };//End of PUT
                             $scope.delete = function (list) {
                                 $scope.result="Processing...";
                                 list.$delete(function () {
@@ -83,7 +83,7 @@
                                 }, function () {
                                     $scope.result = "Error ; Something Went wrong while deleting last entry..";
                                 });
-                            }//End of Delete
+                            };//End of Delete
                         }]);
 
         </script>
