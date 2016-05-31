@@ -18,19 +18,20 @@
         <h4>Status: <b>{{result}}</b></h4>
         <br>
         <table class = "table table-bordered">
-            <caption>{{getMessage}}</caption>
             <thead>
                 <tr>
                     <th>Sr.No</th>
                     <th>Category Name</th>
                     <th>Update Action</th>
+                    <th>Delete Action</th>
                 </tr>
             </thead>
             <tbody>
                 <tr ng-repeat="l in list">
                     <td>{{($index + 1)}}</td>
                     <td><input type="text" value="{{l.name}}" ng-model="l.name"></td>
-                    <td><input type="text" value="{{l.id}}" hidden=""><button ng-click="put(l);">Update</button></td></td>
+                    <td><input type="text" value="{{l.id}}" hidden=""><button ng-click="put(l, $index);">Update</button></td></td>
+                    <td><button ng-click="delete(l, $index);">Delete</button></td>
                 </tr>
             </tbody>
         </table>
@@ -38,29 +39,38 @@
 
             angular.module("popcon", ["ngResource"])
                     .factory("MainCategory", ["$resource", function ($resource) {
-                            return $resource("http://localhost:8084//webresources/main_Category_"
-                                    , null,
-                                    {
-                                        'update': {method: 'PUT'}
-                                    }
+                            return $resource("http://localhost:8084//webresources/main_Category_/:id", {id: '@id'},
+                                    {'get': {method: 'GET'},
+                                        'save'
+                                                : {method: 'POST'},
+                                        'query'
+                                                : {method: 'GET', isArray: true},
+                                        'remove'
+                                                : {method: 'DELETE'},
+                                        'delete'
+                                                : {method: 'DELETE'},
+                                        'update'
+                                                : {method: 'PUT'}}
                             );
                         }])
                     .controller("indexCtr", ["$scope", "$http", "MainCategory", function ($scope, $http, MainCategory) {
                             $scope.list = [];
                             $scope.mainCategory = new MainCategory();
                             $scope.get = function () {
-                                $scope.getMessage = "Getting List...";
+                                $scope.result = "Getting List...";
                                 $scope.list = MainCategory.query(function (response) {
-                                    $scope.getMessage = "Success : fetching list";
+                                    $scope.result = "Success : fetching list";
                                 }, function (response) {
-                                    $scope.getMessage = "Error : fetching list";
+                                    $scope.result = "Error : fetching list";
                                 });
                             } //End of GET
                             $scope.post = function () {
                                 $scope.result = "Adding New Entry..";
                                 $scope.mainCategory.$save(function (res) {
                                     $scope.result = "Success : Last Entry was added successfully..";
-                                    $scope.list.push({id: res.id, name: res.name});
+                                    $scope.mainCategory.id = res.id;
+                                    $scope.list.push($scope.mainCategory);
+                                    $scope.mainCategory = new MainCategory();
                                 }, function () {
                                     $scope.result = "Error : Something Went wrong..";
                                 });
@@ -68,11 +78,19 @@
                             $scope.put = function (list) {
                                 console.log(angular.toJson(list));
                                 list.$update(function (res) {
-                                    console.log(res);
+                                    $scope.result = "Success : Last entry was Updated Successfully..";
                                 }, function () {
-                                    alert("Error ok");
+                                    $scope.result = "Error ; Something went wrong while Updating last entry..";
                                 });
                             }//End of PUT
+                            $scope.delete = function (list) {
+                                list.$delete(function () {
+                                    $scope.result = "Success : Last Entry was deleted successfully..";
+                                    $scope.get();
+                                }, function () {
+                                    $scope.result = "Error ; Something Went wrong while deleting last entry..";
+                                });
+                            }//End of Delete
                         }]);
 
         </script>

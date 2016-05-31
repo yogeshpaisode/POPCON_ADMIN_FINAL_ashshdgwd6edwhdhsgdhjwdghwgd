@@ -71,6 +71,7 @@ public class Main_Category_Resource extends Hibernate {
     }
 
     @PUT
+    @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public MainCategory putJson(String param) {
@@ -78,18 +79,36 @@ public class Main_Category_Resource extends Hibernate {
         try {
             JSONObject json = new JSONObject(param); // json
             int id = json.getInt("id");
-            String name=json.getString("name");
-            System.out.println("\n\n\n\n\n"+name+"\n\n\n\n\n");
+            String name = json.getString("name");
             Criteria cr = session.createCriteria(MainCategory.class);
             cr.add(Restrictions.eq("id", id));
             List results = cr.list();
-            mainCategory=(MainCategory)results.get(0);
+            mainCategory = (MainCategory) results.get(0);
             mainCategory.setName(name);
             session.save(mainCategory);
             transaction.commit();
             closeHibernateConnection();
         } catch (Exception ex) {
             Logger.getLogger(Main_Category_Resource.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return mainCategory;
+    }
+
+    @DELETE
+    @Path("/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public MainCategory deleteJson(@PathParam("id") int id) {
+        MainCategory mainCategory = null;
+        try {
+            Criteria cr = session.createCriteria(MainCategory.class);
+            cr.add(Restrictions.eq("id", id));
+            mainCategory = (MainCategory) cr.list().get(0);
+            session.delete(mainCategory);
+            transaction.commit();
+            closeHibernateConnection();
+        } catch (Exception ex) {
+            System.out.println("\n\n\n\n" + ex + "\n\n\n\n\n\n");
         }
         return mainCategory;
     }
