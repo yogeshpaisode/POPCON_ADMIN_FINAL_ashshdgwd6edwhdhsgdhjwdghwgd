@@ -72,7 +72,7 @@
                                 list.$update(function (res) {
                                     $scope.result = "Success : Last entry was Updated Successfully..";
                                 }, function () {
-                                    $scope.result = "Error ; Something went wrong while Updating last entry..";
+                                    $scope.result = "Error : Something went wrong while Updating last entry..";
                                 });
                             };//End of PUT
                             $scope.delete = function (list) {
@@ -81,7 +81,7 @@
                                     $scope.result = "Success : Last Entry was deleted successfully..";
                                     $scope.get();
                                 }, function () {
-                                    $scope.result = "Error ; Something Went wrong while deleting last entry..";
+                                    $scope.result = "Error : Something Went wrong while deleting last entry..";
                                 });
                             };//End of Delete
                         }]);
