@@ -6,6 +6,7 @@
 package co.in.popcon.API;
 
 import co.in.popcon.hibernate.FirstSubcategory;
+import co.in.popcon.hibernate.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ws.rs.core.Context;
@@ -19,22 +20,36 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import co.in.popcon.service.Hibernate;
+import co.in.popcon.service.Serialization;
+import java.util.List;
+import org.hibernate.Criteria;
+
 /**
  * REST Web Service
  *
  * @author yogesh
  */
 @Path("First_Sub_Category_")
-public class First_Sub_Category_ extends Hibernate{
+public class First_Sub_Category_ extends Hibernate {
 
     @Context
     private UriInfo context;
+    Serialization serialization = new Serialization();
 
     /**
      * Creates a new instance of First_Sub_Category_
      */
     public First_Sub_Category_() {
         super();
+    }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getData() {
+        Criteria cr = session.createCriteria(FirstSubcategory.class);
+        List list = cr.list();
+        closeHibernateConnection();
+        return serialization.getListSerialization(list);
     }
 
     @POST
