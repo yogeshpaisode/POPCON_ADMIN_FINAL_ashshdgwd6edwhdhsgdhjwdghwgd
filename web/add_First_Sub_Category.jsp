@@ -46,7 +46,7 @@
                             </select>
                             <p ng-bind="getData(l.mainCategoryId);"></p>
                         </td>
-                        <td><input type="text" value="{{l.id}}" hidden=""><button ng-click="put(l, $index);">Update</button></td></td>
+                        <td><input type="text" value="{{l.id}}" hidden=""><button ng-click="put(l);">Update</button></td></td>
                         <td><button ng-click="delete(l, $index);">Delete</button></td>
                     </tr>
                 </tbody>
@@ -93,7 +93,13 @@
                         }, function () {
                             $scope.result = "Error : Something Went wrong..";
                         });
-                    }//End of POSt
+                    }//End of POST
+                    
+                    $scope.put=function (list){
+                        list.mainCategoryId=list.mainCategoryId+"";
+                        console.log(list);
+                    }//End of PUT
+                    
                 }]);
 
         </script>
