@@ -10,7 +10,14 @@
 
     var app=angular.module("popcon", ["ngResource"]);
             app.factory("MainCategory", ["$resource", function ($resource) {
-                    return $resource("http://localhost:8084//webresources/main_Category_/:id", {id: '@id'},
+                    return $resource("/webresources/main_Category_/:id", {id: '@id'},
+                            {
+                                'update': {method: 'PUT'}
+                            }
+                    );
+                }]);
+              app.factory("firstSubCategory", ["$resource", function ($resource) {
+                    return $resource("/webresources/First_Sub_Category_/:id", {id: '@id'},
                             {
                                 'update': {method: 'PUT'}
                             }
