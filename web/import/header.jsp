@@ -5,3 +5,15 @@
 <script src="js/bootstrap.min.js"></script>
 <script src="js/angular.min.js"></script>
 <script src="js/angular-resource.min.js"></script>
+
+<script>
+
+    var app=angular.module("popcon", ["ngResource"]);
+            app.factory("MainCategory", ["$resource", function ($resource) {
+                    return $resource("http://localhost:8084//webresources/main_Category_/:id", {id: '@id'},
+                            {
+                                'update': {method: 'PUT'}
+                            }
+                    );
+                }]);
+</script>

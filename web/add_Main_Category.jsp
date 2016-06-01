@@ -36,16 +36,7 @@
             </tbody>
         </table>
         <script>
-
-            angular.module("popcon", ["ngResource"])
-                    .factory("MainCategory", ["$resource", function ($resource) {
-                            return $resource("http://localhost:8084//webresources/main_Category_/:id", {id: '@id'},
-                                    {
-                                        'update': {method: 'PUT'}
-                                    }
-                            );
-                        }])
-                    .controller("indexCtr", ["$scope", "$http", "MainCategory", function ($scope, $http, MainCategory) {
+                    app.controller("indexCtr", ["$scope", "$http", "MainCategory", function ($scope, $http, MainCategory) {
                             $scope.list = [];
                             $scope.mainCategory = new MainCategory();
                             $scope.get = function () {
