@@ -37,11 +37,14 @@
                 <tbody>
                     <tr ng-repeat="l in firstSubCategory_List">
                         <td>{{($index + 1)}}</td>
-                        <td>{{l.name}}</td>   
+                        <td>
+                            <input type="text" value="{{l.name}}" ng-model="l.name" />
+                        </td>   
                         <td>
                             <select class="form-control" ng-model="l.mainCategoryId">
                                 <option ng-repeat="l in list" value="{{l.id}}">{{l.name}}</option>
                             </select>
+                            <p ng-bind="getData(l.mainCategoryId);"></p>
                         </td>
                         <td><input type="text" value="{{l.id}}" hidden=""><button ng-click="put(l, $index);">Update</button></td></td>
                         <td><button ng-click="delete(l, $index);">Delete</button></td>
@@ -53,6 +56,18 @@
         <script>
             app.controller("indexCtr", ["$scope", "$http", "MainCategory", "firstSubCategory", function ($scope, $http, MainCategory, firstSubCategory) {
                     $scope.form = new firstSubCategory();
+                    $scope.getData=function (id){
+                        var re_id=id+"";
+                        var cat_name="bla";
+                        for(var i=0;i<$scope.list.length;i++){
+                            var loc_id=$scope.list[i].id+"";
+                            if(loc_id==re_id){
+                                cat_name=$scope.list[i].name;
+                                break;
+                            }
+                        }
+                        return cat_name;
+                    }
                     $scope.get = function () {
                         $scope.result = "Processing...";
                         $scope.list = MainCategory.query(function () {
