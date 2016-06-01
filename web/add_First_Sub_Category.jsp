@@ -41,7 +41,7 @@
                             <input type="text" value="{{l.name}}" ng-model="l.name" />
                         </td>   
                         <td>
-                            <select class="form-control" ng-model="l.mainCategoryId">
+                            <select class="form-control" ng-model="l.mainCategoryId" ng-change="getData(l.mainCategoryId);" >
                                 <option ng-repeat="l in list" value="{{l.id}}">{{l.name}}</option>
                             </select>
                             <p ng-bind="getData(l.mainCategoryId);"></p>
