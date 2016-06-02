@@ -75,11 +75,13 @@
                     }; //End of GET
                     $scope.post = function () {
                         $scope.result = "Processing...";
+                        $scope.form.main_Category_id=$scope.form.main_Category_id+"";
                         $scope.form.$save(function (res) {
                             console.log(angular.toJson(res));
                             $scope.result = "Success : Last Entry was added successfully..";
                             $scope.firstSubCategory_List.push($scope.form);
                             $scope.form = new firstSubCategory();
+                            $scope.form.main_Category_id=$scope.list[0].id+"";
                         }, function () {
                             $scope.result = "Error : Something Went wrong..";
                         });
