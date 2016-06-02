@@ -46,6 +46,17 @@ public class Main_Category_Resource extends Hibernate {
     }
 
     @GET
+    @Path("/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getDefaultJson(@PathParam("id") int id) {
+        Criteria cr = session.createCriteria(FirstSubcategory.class);
+        cr.add(Restrictions.eq("mainCategoryId", id));
+        List list = cr.list();
+        closeHibernateConnection();
+        return serialization.getListSerialization(list);
+    }
+    
+    @GET
     @Produces(MediaType.APPLICATION_JSON)
     public String getJson() {
         Criteria cr = session.createCriteria(MainCategory.class);
