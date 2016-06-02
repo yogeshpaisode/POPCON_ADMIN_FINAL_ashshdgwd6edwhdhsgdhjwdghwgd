@@ -41,10 +41,9 @@
                             <input type="text" value="{{l.name}}" ng-model="l.name" />
                         </td>   
                         <td>
-                            <select class="form-control" ng-model="l.mainCategoryId" ng-change="getData(l.mainCategoryId);" >
+                            <select class="form-control" ng-model="l.mainCategoryId" ng-change="getData(l.mainCategoryId);" ng-init="getData(l);">
                                 <option ng-repeat="l in list" value="{{l.id}}">{{l.name}}</option>
                             </select>
-                            <p ng-bind="getData(l.mainCategoryId);"></p>
                         </td>
                         <td><input type="text" value="{{l.id}}" hidden=""><button ng-click="put(l);">Update</button></td></td>
                         <td><button ng-click="delete(l, $index);">Delete</button></td>
@@ -56,17 +55,8 @@
         <script>
             app.controller("indexCtr", ["$scope", "$http", "MainCategory", "firstSubCategory", function ($scope, $http, MainCategory, firstSubCategory) {
                     $scope.form = new firstSubCategory();
-                    $scope.getData = function (id) {
-                        var re_id = id + "";
-                        var cat_name = "bla";
-                        for (var i = 0; i < $scope.list.length; i++) {
-                            var loc_id = $scope.list[i].id + "";
-                            if (loc_id == re_id) {
-                                cat_name = $scope.list[i].name;
-                                break;
-                            }
-                        }
-                        return cat_name;
+                    $scope.getData = function (obj) {
+                        obj.mainCategoryId=obj.mainCategoryId+"";
                     }
                     $scope.get = function () {
                         $scope.result = "Processing...";
@@ -101,6 +91,7 @@
                         console.log("I/O : " + angular.toJson(list));
                         list.$update(function (res) {
                             $scope.result = "Success : Last entry was Updated Successfully..";
+                            $scope.getData(list);
                             console.log("O/P : " + angular.toJson(res));
                         }, function () {
                             $scope.result = "Error : Something went wrong while Updating last entry..";

@@ -71,20 +71,20 @@ public class First_Sub_Category_ extends Hibernate {
         }
         return firstSubcategory;
     }
-    
+
     @PUT
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public FirstSubcategory putData(@PathParam("id") int id,String param) {
-        FirstSubcategory firstSubcategory=null;
+    public FirstSubcategory putData(@PathParam("id") int id, String param) {
+        FirstSubcategory firstSubcategory = null;
         try {
             JSONObject json = new JSONObject(param); // json
-            int mainCategoryId=Integer.parseInt(json.getString("mainCategoryId"));
-            String name=json.getString("name");
+            int mainCategoryId = Integer.parseInt(json.getString("mainCategoryId"));
+            String name = json.getString("name");
             Criteria cr = session.createCriteria(FirstSubcategory.class);
             cr.add(Restrictions.eq("id", id));
-            firstSubcategory=(FirstSubcategory)cr.list().get(0);
+            firstSubcategory = (FirstSubcategory) cr.list().get(0);
             firstSubcategory.setMainCategoryId(mainCategoryId);
             firstSubcategory.setName(name);
             session.save(firstSubcategory);
@@ -93,8 +93,25 @@ public class First_Sub_Category_ extends Hibernate {
         } catch (JSONException ex) {
             Logger.getLogger(First_Sub_Category_.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-            return firstSubcategory;
+        return firstSubcategory;
     }
 
+    @DELETE
+    @Path("/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public FirstSubcategory deleteData(@PathParam("id") int id) {
+        FirstSubcategory firstSubcategory = null;
+        try {
+            Criteria cr = session.createCriteria(FirstSubcategory.class);
+            cr.add(Restrictions.eq("id", id));
+            firstSubcategory = (FirstSubcategory) cr.list().get(0);
+            session.delete(firstSubcategory);
+            transaction.commit();
+            closeHibernateConnection();
+        } catch (Exception ex) {
+            System.out.println("\n\n\n\n" + ex + "\n\n\n\n\n\n");
+        }
+        return firstSubcategory;
+    }
 }
