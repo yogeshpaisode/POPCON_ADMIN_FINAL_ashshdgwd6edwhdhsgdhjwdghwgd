@@ -46,7 +46,7 @@
                             </select>
                         </td>
                         <td><input type="text" value="{{l.id}}" hidden=""><button ng-click="put(l);">Update</button></td></td>
-                        <td><button ng-click="delete(l, $index);">Delete</button></td>
+                        <td><button ng-click="delete(l);">Delete</button></td>
                     </tr>
                 </tbody>
             </table>
@@ -56,7 +56,7 @@
             app.controller("indexCtr", ["$scope", "$http", "MainCategory", "firstSubCategory", function ($scope, $http, MainCategory, firstSubCategory) {
                     $scope.form = new firstSubCategory();
                     $scope.getData = function (obj) {
-                        obj.mainCategoryId=obj.mainCategoryId+"";
+                        obj.mainCategoryId = obj.mainCategoryId + "";
                     }
                     $scope.get = function () {
                         $scope.result = "Processing...";
@@ -97,6 +97,16 @@
                             $scope.result = "Error : Something went wrong while Updating last entry..";
                         });
                     }//End of PUT
+
+                    $scope.delete = function (list) {
+                        $scope.result = "Processing...";
+                        list.$delete(function () {
+                            $scope.result = "Success : Last Entry was deleted successfully..";
+                            $scope.get();
+                        }, function () {
+                            $scope.result = "Error : Something Went wrong while deleting last entry..";
+                        });
+                    }
 
                 }]);
 

@@ -30,8 +30,8 @@
                 <tr ng-repeat="l in list">
                     <td>{{($index + 1)}}</td>
                     <td><input type="text" value="{{l.name}}" ng-model="l.name"></td>
-                    <td><input type="text" value="{{l.id}}" hidden=""><button ng-click="put(l, $index);">Update</button></td></td>
-                    <td><button ng-click="delete(l, $index);">Delete</button></td>
+                    <td><input type="text" value="{{l.id}}" hidden=""><button ng-click="put(l);">Update</button></td></td>
+                    <td><button ng-click="delete(l);">Delete</button></td>
                 </tr>
             </tbody>
         </table>
