@@ -56,13 +56,13 @@
         <script>
             app.controller("indexCtr", ["$scope", "$http", "MainCategory", "firstSubCategory", function ($scope, $http, MainCategory, firstSubCategory) {
                     $scope.form = new firstSubCategory();
-                    $scope.getData=function (id){
-                        var re_id=id+"";
-                        var cat_name="bla";
-                        for(var i=0;i<$scope.list.length;i++){
-                            var loc_id=$scope.list[i].id+"";
-                            if(loc_id==re_id){
-                                cat_name=$scope.list[i].name;
+                    $scope.getData = function (id) {
+                        var re_id = id + "";
+                        var cat_name = "bla";
+                        for (var i = 0; i < $scope.list.length; i++) {
+                            var loc_id = $scope.list[i].id + "";
+                            if (loc_id == re_id) {
+                                cat_name = $scope.list[i].name;
                                 break;
                             }
                         }
@@ -94,12 +94,19 @@
                             $scope.result = "Error : Something Went wrong..";
                         });
                     }//End of POST
-                    
-                    $scope.put=function (list){
-                        list.mainCategoryId=list.mainCategoryId+"";
-                        console.log(list);
+
+                    $scope.put = function (list) {
+                        $scope.result = "Processing...";
+                        list.mainCategoryId = list.mainCategoryId + "";
+                        console.log("I/O : " + angular.toJson(list));
+                        list.$update(function (res) {
+                            $scope.result = "Success : Last entry was Updated Successfully..";
+                            console.log("O/P : " + angular.toJson(res));
+                        }, function () {
+                            $scope.result = "Error : Something went wrong while Updating last entry..";
+                        });
                     }//End of PUT
-                    
+
                 }]);
 
         </script>

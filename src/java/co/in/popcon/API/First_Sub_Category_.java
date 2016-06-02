@@ -23,6 +23,7 @@ import co.in.popcon.service.Hibernate;
 import co.in.popcon.service.Serialization;
 import java.util.List;
 import org.hibernate.Criteria;
+import org.hibernate.criterion.Restrictions;
 
 /**
  * REST Web Service
@@ -69,6 +70,31 @@ public class First_Sub_Category_ extends Hibernate {
             Logger.getLogger(First_Sub_Category_.class.getName()).log(Level.SEVERE, null, ex);
         }
         return firstSubcategory;
+    }
+    
+    @PUT
+    @Path("/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public FirstSubcategory putData(@PathParam("id") int id,String param) {
+        FirstSubcategory firstSubcategory=null;
+        try {
+            JSONObject json = new JSONObject(param); // json
+            int mainCategoryId=Integer.parseInt(json.getString("mainCategoryId"));
+            String name=json.getString("name");
+            Criteria cr = session.createCriteria(FirstSubcategory.class);
+            cr.add(Restrictions.eq("id", id));
+            firstSubcategory=(FirstSubcategory)cr.list().get(0);
+            firstSubcategory.setMainCategoryId(mainCategoryId);
+            firstSubcategory.setName(name);
+            session.save(firstSubcategory);
+            transaction.commit();
+            closeHibernateConnection();
+        } catch (JSONException ex) {
+            Logger.getLogger(First_Sub_Category_.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+            return firstSubcategory;
     }
 
 }
