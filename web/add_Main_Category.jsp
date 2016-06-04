@@ -60,10 +60,11 @@
                             };// End of POST
                             $scope.put = function (list) {
                                 $scope.result="Processing...";
+                                console.log(list);
                                 list.$update(function (res) {
                                     $scope.result = "Success : Last entry was Updated Successfully..";
-                                }, function () {
-                                    $scope.result = "Error : Something went wrong while Updating last entry..";
+                                }, function (res) {
+                                    $scope.result = "Error : Something went wrong while Updating last entry.."+angular.toJson(res);
                                 });
                             };//End of PUT
                             $scope.delete = function (list) {

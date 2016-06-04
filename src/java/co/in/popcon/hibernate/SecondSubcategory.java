@@ -1,5 +1,5 @@
 package co.in.popcon.hibernate;
-// Generated May 29, 2016 6:12:54 PM by Hibernate Tools 4.3.1
+// Generated Jun 3, 2016 7:34:59 PM by Hibernate Tools 4.3.1
 
 
 
@@ -9,31 +9,31 @@ package co.in.popcon.hibernate;
 public class SecondSubcategory  implements java.io.Serializable {
 
 
-     private Integer id;
-     private int firstSubcategoryId;
+     private Integer secondSubcategoryId;
+     private FirstSubcategory firstSubcategory;
      private String name;
 
     public SecondSubcategory() {
     }
 
-    public SecondSubcategory(int firstSubcategoryId, String name) {
-       this.firstSubcategoryId = firstSubcategoryId;
+    public SecondSubcategory(FirstSubcategory firstSubcategory, String name) {
+       this.firstSubcategory = firstSubcategory;
        this.name = name;
     }
    
-    public Integer getId() {
-        return this.id;
+    public Integer getSecondSubcategoryId() {
+        return this.secondSubcategoryId;
     }
     
-    public void setId(Integer id) {
-        this.id = id;
+    public void setSecondSubcategoryId(Integer secondSubcategoryId) {
+        this.secondSubcategoryId = secondSubcategoryId;
     }
-    public int getFirstSubcategoryId() {
-        return this.firstSubcategoryId;
+    public FirstSubcategory getFirstSubcategory() {
+        return this.firstSubcategory;
     }
     
-    public void setFirstSubcategoryId(int firstSubcategoryId) {
-        this.firstSubcategoryId = firstSubcategoryId;
+    public void setFirstSubcategory(FirstSubcategory firstSubcategory) {
+        this.firstSubcategory = firstSubcategory;
     }
     public String getName() {
         return this.name;

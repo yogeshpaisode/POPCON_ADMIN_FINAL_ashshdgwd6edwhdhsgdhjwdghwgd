@@ -21,6 +21,10 @@ import org.json.JSONObject;
 
 import co.in.popcon.service.Hibernate;
 import co.in.popcon.service.Serialization;
+import co.in.popcon.test.Bin;
+import co.in.popcon.test.Bin2;
+import flexjson.JSONSerializer;
+import java.util.ArrayList;
 import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
@@ -47,60 +51,80 @@ public class First_Sub_Category_ extends Hibernate {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public String getData() {
+        List list = new ArrayList();
         Criteria cr = session.createCriteria(FirstSubcategory.class);
-        List list = cr.list();
+        for (Object o : cr.list()) {
+            Bin2 bin2 = new Bin2();
+            FirstSubcategory f = (FirstSubcategory) o;
+            bin2.setFirstSubcategoryId(f.getFirstSubcategoryId() + "");
+            bin2.setName(f.getName());
+            bin2.setMainCategoryId(f.getMainCategory().getMainCategoryId() + "");
+            list.add(bin2);
+        }
+        JSONSerializer serializer = new JSONSerializer();
         closeHibernateConnection();
-        return serialization.getListSerialization(list);
+        return serializer.exclude("*.class").serialize(list);
     }
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public FirstSubcategory getJson(String param) {
+    public Bin postJson(String param) {
         FirstSubcategory firstSubcategory = null;
+        Bin bin = new Bin();
         try {
             JSONObject json = new JSONObject(param); // json
-            int id = Integer.parseInt(json.getString("main_Category_id"));
+            int mainCategoryId = Integer.parseInt(json.getString("mainCategoryId"));
             String name = json.getString("first_Sub_Category_Name");
-            firstSubcategory = new FirstSubcategory(id, name);
+            Criteria cr = session.createCriteria(MainCategory.class);
+            cr.add(Restrictions.eq("mainCategoryId", mainCategoryId));
+            MainCategory mainCategory = (MainCategory) cr.list().get(0);
+            firstSubcategory = new FirstSubcategory(mainCategory, name);
             session.save(firstSubcategory);
             transaction.commit();
+            bin.setFirstSubcategoryId(firstSubcategory.getFirstSubcategoryId());
+            bin.setName(firstSubcategory.getName());
+            bin.setMainCategoryId(mainCategoryId + "");
             closeHibernateConnection();
         } catch (JSONException ex) {
             Logger.getLogger(First_Sub_Category_.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return firstSubcategory;
+        return bin;
     }
 
     @PUT
-    @Path("/{id}")
+    @Path("/{firstSubcategoryId}")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public FirstSubcategory putData(@PathParam("id") int id, String param) {
+    public void putData(@PathParam("firstSubcategoryId") int id, String param) {
         FirstSubcategory firstSubcategory = null;
         try {
             JSONObject json = new JSONObject(param); // json
             int mainCategoryId = Integer.parseInt(json.getString("mainCategoryId"));
             String name = json.getString("name");
             Criteria cr = session.createCriteria(FirstSubcategory.class);
-            cr.add(Restrictions.eq("id", id));
+            cr.add(Restrictions.eq("firstSubcategoryId", id));
             firstSubcategory = (FirstSubcategory) cr.list().get(0);
-            firstSubcategory.setMainCategoryId(mainCategoryId);
             firstSubcategory.setName(name);
+
+            cr = session.createCriteria(MainCategory.class);
+            cr.add(Restrictions.eq("mainCategoryId", mainCategoryId));
+            MainCategory mainCategory = (MainCategory) cr.list().get(0);
+            firstSubcategory.setMainCategory(mainCategory);
+
             session.save(firstSubcategory);
             transaction.commit();
             closeHibernateConnection();
         } catch (JSONException ex) {
             Logger.getLogger(First_Sub_Category_.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return firstSubcategory;
     }
 
     @DELETE
-    @Path("/{id}")
+    @Path("/{firstSubcategoryId}")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public FirstSubcategory deleteData(@PathParam("id") int id) {
+    public void deleteData(@PathParam("firstSubcategoryId") int id) {
         FirstSubcategory firstSubcategory = null;
         try {
             Criteria cr = session.createCriteria(FirstSubcategory.class);
@@ -112,6 +136,5 @@ public class First_Sub_Category_ extends Hibernate {
         } catch (Exception ex) {
             System.out.println("\n\n\n\n" + ex + "\n\n\n\n\n\n");
         }
-        return firstSubcategory;
     }
 }

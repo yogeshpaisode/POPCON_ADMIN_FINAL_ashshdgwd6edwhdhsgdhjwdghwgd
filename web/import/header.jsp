@@ -10,16 +10,18 @@
 
     var app = angular.module("popcon", ["ngResource"]);
     app.factory("MainCategory", ["$resource", function ($resource) {
-            return $resource("/webresources/main_Category_/:id", {id: '@id'},
+            return $resource("/webresources/main_Category_/:mainCategoryId", {mainCategoryId: '@mainCategoryId'},
                     {
-                        'update': {method: 'PUT'}
+                        'update': {method: 'PUT',isArray:true},
+                        'delete': {method: 'DELETE',isArray:true}
                     }
             );
         }]);
     app.factory("firstSubCategory", ["$resource", function ($resource) {
-            return $resource("/webresources/First_Sub_Category_/:id", {id: '@id'},
+            return $resource("/webresources/First_Sub_Category_/:firstSubcategoryId", {firstSubcategoryId: '@firstSubcategoryId'},
                     {
-                        'update': {method: 'PUT'}
+                        'update': {method: 'PUT',isArray:true},
+                        'delete': {method: 'DELETE',isArray:true}
                     }
             );
         }]);

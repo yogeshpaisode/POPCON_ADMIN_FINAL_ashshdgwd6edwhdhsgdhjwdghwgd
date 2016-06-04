@@ -12,8 +12,8 @@
 
             <div class="form-group">
                 <label>Main Category Name</label>
-                <select class="form-control" ng-model="form.main_Category_id">
-                    <option ng-repeat="l in list" value="{{l.id}}">{{l.name}}</option>
+                <select class="form-control" ng-model="form.mainCategoryId">
+                    <option ng-repeat="l in list" value="{{l.mainCategoryId}}">{{l.name}}</option>
                 </select>
             </div><!--End of Select-->
             <div class="form-group">
@@ -41,8 +41,8 @@
                             <input type="text" value="{{l.name}}" ng-model="l.name" />
                         </td>   
                         <td>
-                            <select class="form-control" ng-model="l.mainCategoryId" ng-change="getData(l.mainCategoryId);" ng-init="getData(l);">
-                                <option ng-repeat="l in list" value="{{l.id}}">{{l.name}}</option>
+                            <select class="form-control" ng-model="l.mainCategoryId" ng-init="sort(l);">
+                                <option ng-repeat="l in list" value="{{l.mainCategoryId}}">{{l.name}}</option>
                             </select>
                         </td>
                         <td><input type="text" value="{{l.id}}" hidden=""><button ng-click="put(l);">Update</button></td></td>
@@ -55,33 +55,35 @@
         <script>
             app.controller("indexCtr", ["$scope", "$http", "MainCategory", "firstSubCategory", function ($scope, $http, MainCategory, firstSubCategory) {
                     $scope.form = new firstSubCategory();
-                    $scope.getData = function (obj) {
-                        obj.mainCategoryId = obj.mainCategoryId + "";
+                    $scope.sort=function (l){
+                        //console.log(l);
+                        l.mainCategoryId=l.mainCategoryId+"";
                     }
                     $scope.get = function () {
                         $scope.result = "Processing...";
-                        $scope.list = MainCategory.query(function () {
+                        $scope.list = MainCategory.query(function (res) {
                             $scope.result = "Success : fetching list";
-                            $scope.form.main_Category_id = $scope.list[0].id + "";
+                            console.log(res);
+                            $scope.form.mainCategoryId = $scope.list[0].mainCategoryId + "";
                         }, function () {
                             $scope.result = "Error : fetching list";
                         });
                         $scope.firstSubCategory_List = firstSubCategory.query(function (response) {
                             $scope.result = "Success : fetching list";
-                            //console.log(angular.toJson(response));
+                            console.log(angular.toJson(response));
                         }, function (response) {
                             $scope.result = "Error : fetching list";
                         });
                     }; //End of GET
                     $scope.post = function () {
                         $scope.result = "Processing...";
-                        $scope.form.main_Category_id=$scope.form.main_Category_id+"";
+                        console.log($scope.form);
+                        $scope.form.mainCategoryId = $scope.form.mainCategoryId + "";
                         $scope.form.$save(function (res) {
                             console.log(angular.toJson(res));
                             $scope.result = "Success : Last Entry was added successfully..";
                             $scope.firstSubCategory_List.push($scope.form);
                             $scope.form = new firstSubCategory();
-                            $scope.form.main_Category_id=$scope.list[0].id+"";
                         }, function () {
                             $scope.result = "Error : Something Went wrong..";
                         });
@@ -93,7 +95,7 @@
                         console.log("I/O : " + angular.toJson(list));
                         list.$update(function (res) {
                             $scope.result = "Success : Last entry was Updated Successfully..";
-                            $scope.getData(list);
+                            //$scope.getData(list);
                             console.log("O/P : " + angular.toJson(res));
                         }, function () {
                             $scope.result = "Error : Something went wrong while Updating last entry..";
