@@ -24,7 +24,7 @@
             </div><!--End of Select-->            
             <div class="form-group">
                 <label>Second Sub Category Name</label>
-                <input type="text" class="form-control" ng-model="form.second_Sub_Category_Name">
+                <input type="text" class="form-control" ng-model="form.secondSubCategoryName">
             </div><!--End of Text Field-->
             <button type="submit" class="btn btn-primary" ng-click="post();">Add Category</button>
             <br><br>

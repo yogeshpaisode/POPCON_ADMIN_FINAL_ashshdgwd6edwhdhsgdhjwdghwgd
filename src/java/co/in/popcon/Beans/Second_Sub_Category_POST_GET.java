@@ -9,11 +9,11 @@ package co.in.popcon.Beans;
  *
  * @author yogesh
  */
-public class Second_Sub_Category_POST_ {
+public class Second_Sub_Category_POST_GET {
     private String mainCategoryId;
     private String firstSubcategoryId;
-    private String second_Sub_Category_Name;
-    private String second_Sub_Category_Id;
+    private String secondSubCategoryName;
+    private String secondSubCategoryId;
 
     public String getMainCategoryId() {
         return mainCategoryId;
@@ -31,19 +31,20 @@ public class Second_Sub_Category_POST_ {
         this.firstSubcategoryId = firstSubcategoryId;
     }
 
-    public String getSecond_Sub_Category_Name() {
-        return second_Sub_Category_Name;
+    public String getSecondSubCategoryName() {
+        return secondSubCategoryName;
     }
 
-    public void setSecond_Sub_Category_Name(String second_Sub_Category_Name) {
-        this.second_Sub_Category_Name = second_Sub_Category_Name;
+    public void setSecondSubCategoryName(String secondSubCategoryName) {
+        this.secondSubCategoryName = secondSubCategoryName;
     }
 
-    public String getSecond_Sub_Category_Id() {
-        return second_Sub_Category_Id;
+    public String getSecondSubCategoryId() {
+        return secondSubCategoryId;
     }
 
-    public void setSecond_Sub_Category_Id(String second_Sub_Category_Id) {
-        this.second_Sub_Category_Id = second_Sub_Category_Id;
+    public void setSecondSubCategoryId(String secondSubCategoryId) {
+        this.secondSubCategoryId = secondSubCategoryId;
     }
+
 }
