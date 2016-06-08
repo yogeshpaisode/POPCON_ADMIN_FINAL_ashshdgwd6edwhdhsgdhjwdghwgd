@@ -18,8 +18,8 @@
             </div><!--End of Select-->
             <div class="form-group">
                 <label>First Sub Category Name</label>
-                <select class="form-control" ng-model="form.first_Sub_Category_id">
-                    <option ng-repeat="l in subList|filter:form.main_Category_id" value="{{l.id}}">{{l.name}}</option>
+                <select class="form-control" ng-model="form.firstSubcategoryId">
+                    <option ng-repeat="l in subList|filter:form.mainCategoryId" value="{{l.firstSubcategoryId}}">{{l.name}}</option>
                 </select>
             </div><!--End of Select-->
             <h4>Status : <b>{{result}}</b></h4>
@@ -31,8 +31,8 @@
                             $scope.sort = function () {
                                 var flag = true;
                                 angular.forEach($scope.subList, function (value) {
-                                    if (value.mainCategoryId == $scope.form.mainCategoryId && flag) {
-                                        $scope.form.first_Sub_Category_id = value.id + "";
+                                    if ((value.mainCategoryId == $scope.form.mainCategoryId )&& flag) {
+                                        $scope.form.firstSubcategoryId = value.firstSubcategoryId + "";
                                         flag = false;
                                     }
                                 }, "");
@@ -46,9 +46,10 @@
                                     $scope.result = "Error : fetching list";
                                 });
                                 $scope.subList = firstSubCategory.query(function (response) {
-                                    //console.log($scope.subList);
+                                    console.log($scope.subList);
                                     $scope.result = "Success : fetching list";
-                                    $scope.form.first_Sub_Category_id = $scope.subList[0].id + "";
+                                    $scope.form.firstSubcategoryId = $scope.subList[0].firstSubcategoryId + "";
+                                    $scope.sort();
                                 }, function (response) {
                                     $scope.result = "Error : fetching list";
                                 });
