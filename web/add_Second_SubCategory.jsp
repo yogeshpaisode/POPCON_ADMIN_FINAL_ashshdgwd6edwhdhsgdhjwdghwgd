@@ -26,12 +26,12 @@
             <br>
         </section>
         <script>
-                    app.controller("indexCtr", ["$scope", "$http", "MainCategory", "firstSubCategory", function ($scope, $http, MainCategory, firstSubCategory) {
+                    app.controller("indexCtr", ["$scope", "$http", "MainCategory", "firstSubCategory","$timeout",function ($scope, $http, MainCategory, firstSubCategory,$timeout) {
                             $scope.form = new firstSubCategory();
                             $scope.sort = function () {
                                 var flag = true;
                                 angular.forEach($scope.subList, function (value) {
-                                    if ((value.mainCategoryId == $scope.form.mainCategoryId )&& flag) {
+                                    if ((value.mainCategoryId == $scope.form.mainCategoryId) && flag) {
                                         $scope.form.firstSubcategoryId = value.firstSubcategoryId + "";
                                         flag = false;
                                     }
@@ -49,7 +49,9 @@
                                     console.log($scope.subList);
                                     $scope.result = "Success : fetching list";
                                     $scope.form.firstSubcategoryId = $scope.subList[0].firstSubcategoryId + "";
-                                    $scope.sort();
+                                    $timeout(function () {
+                                        $scope.sort();
+                                    }, 200);
                                 }, function (response) {
                                     $scope.result = "Error : fetching list";
                                 });
