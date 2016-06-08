@@ -114,6 +114,14 @@
                                     console.log("Error:..");
                                 });
                             } //End of POST
+                            $scope.delete = function (obj) {
+                                console.log("I/O: " + angular.toJson(obj));
+                                obj.$delete(function (succ) {
+                                    console.log("Success : "+angular.toJson(succ));
+                                }, function (err) {
+                                    console.log("Error :");
+                                });
+                            }//End of DELETE
 
                         }]);
 

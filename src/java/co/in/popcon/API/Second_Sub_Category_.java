@@ -44,7 +44,7 @@ public class Second_Sub_Category_ extends Hibernate {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public String getJson(String param) throws JSONException {
+    public String getJson() throws JSONException {
         List list = new ArrayList();
         Criteria cr = session.createCriteria(SecondSubcategory.class);
         for (Object o : cr.list()) {
@@ -87,5 +87,18 @@ public class Second_Sub_Category_ extends Hibernate {
         closeHibernateConnection();
 
         return bin;
+    }
+
+    @DELETE
+    @Path("/{secondSubCategoryId}")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public void deleteData(@PathParam("secondSubCategoryId") int secondSubCategoryId) {
+        Criteria cr = session.createCriteria(SecondSubcategory.class);
+        cr.add(Restrictions.eq("secondSubcategoryId", secondSubCategoryId));
+        SecondSubcategory s = (SecondSubcategory) cr.list().get(0);
+        session.delete(s);
+        transaction.commit();
+        closeHibernateConnection();
     }
 }
