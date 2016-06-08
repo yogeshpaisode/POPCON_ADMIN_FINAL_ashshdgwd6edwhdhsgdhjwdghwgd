@@ -26,7 +26,7 @@
             );
         }]);
     app.factory("secondSubCategory", ["$resource", function ($resource) {
-            return $resource("/webresources/Second_Sub_Category_/:secondSubCategoryId", {secondSubCategoryId: '@secondSubCategoryId'},
+            return $resource("/webresources/Second_Sub_Category_/:secondSubcategoryId", {secondSubcategoryId: '@secondSubcategoryId'},
                     {
                         'update': {method: 'PUT',isArray:true},
                         'delete': {method: 'DELETE',isArray:true}

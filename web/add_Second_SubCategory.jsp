@@ -94,20 +94,26 @@
                                     $scope.result = "Error : fetching list";
                                 });
 
+                                $scope.getSecondSubCategoryList();
+
+                            }; //End of GET
+
+                            $scope.getSecondSubCategoryList = function () {
+                                $scope.result = "Refreshing List..";
                                 $scope.thirdList = secondSubCategory.query(function (response) {
                                     console.log(angular.toJson($scope.thirdList));
                                     $scope.result = "Success : fetching list";
                                 }, function () {
                                     $scope.result = "Error : fetching list";
                                 });
-
-                            }; //End of GET
+                            }
 
                             $scope.post = function () {
                                 $scope.result = "Processing...";
                                 console.log($scope.form);
                                 $scope.form.$save(function (res) {
                                     $scope.result = "Success : Last Entry was added successfully..";
+                                    $scope.thirdList.push(res);
                                     console.log(angular.toJson(res));
                                 }, function (res) {
                                     $scope.result = "Error : Something Went wrong..";
@@ -115,11 +121,12 @@
                                 });
                             } //End of POST
                             $scope.delete = function (obj) {
-                                console.log("I/O: " + angular.toJson(obj));
+                                $scope.result = "Processing...";
                                 obj.$delete(function (succ) {
-                                    console.log("Success : "+angular.toJson(succ));
+                                    $scope.result = "Last Entry was Deleted Successfully...";
+                                    $scope.getSecondSubCategoryList();
                                 }, function (err) {
-                                    console.log("Error :");
+                                    $scope.result = "Error while Deleteing Last Entry...";
                                 });
                             }//End of DELETE
 

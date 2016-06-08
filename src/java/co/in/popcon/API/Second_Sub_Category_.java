@@ -54,7 +54,7 @@ public class Second_Sub_Category_ extends Hibernate {
             MainCategory m = f.getMainCategory();
             ssc.setMainCategoryId(m.getMainCategoryId() + "");
             ssc.setFirstSubcategoryId(f.getFirstSubcategoryId() + "");
-            ssc.setSecondSubCategoryId(s.getSecondSubcategoryId() + "");
+            ssc.setSecondSubcategoryId(s.getSecondSubcategoryId() + "");
             ssc.setSecondSubCategoryName(s.getName());
             list.add(ssc);
         }
@@ -80,7 +80,7 @@ public class Second_Sub_Category_ extends Hibernate {
         session.save(secondSubcategory);
         bin.setFirstSubcategoryId(firstSubcategory.getFirstSubcategoryId() + "");
         bin.setMainCategoryId(mainCategory.getMainCategoryId() + "");
-        bin.setSecondSubCategoryId(secondSubcategory.getSecondSubcategoryId() + "");
+        bin.setSecondSubcategoryId(secondSubcategory.getSecondSubcategoryId() + "");
         bin.setSecondSubCategoryName(secondSubcategory.getName());
 
         transaction.commit();
@@ -90,12 +90,12 @@ public class Second_Sub_Category_ extends Hibernate {
     }
 
     @DELETE
-    @Path("/{secondSubCategoryId}")
+    @Path("/{secondSubcategoryId}")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public void deleteData(@PathParam("secondSubCategoryId") int secondSubCategoryId) {
+    public void deleteData(@PathParam("secondSubcategoryId") int secondSubcategoryId) {
         Criteria cr = session.createCriteria(SecondSubcategory.class);
-        cr.add(Restrictions.eq("secondSubcategoryId", secondSubCategoryId));
+        cr.add(Restrictions.eq("secondSubcategoryId", secondSubcategoryId));
         SecondSubcategory s = (SecondSubcategory) cr.list().get(0);
         session.delete(s);
         transaction.commit();

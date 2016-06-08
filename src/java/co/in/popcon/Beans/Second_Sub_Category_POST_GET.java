@@ -13,7 +13,6 @@ public class Second_Sub_Category_POST_GET {
     private String mainCategoryId;
     private String firstSubcategoryId;
     private String secondSubCategoryName;
-    private String secondSubCategoryId;
 
     public String getMainCategoryId() {
         return mainCategoryId;
@@ -39,12 +38,12 @@ public class Second_Sub_Category_POST_GET {
         this.secondSubCategoryName = secondSubCategoryName;
     }
 
-    public String getSecondSubCategoryId() {
-        return secondSubCategoryId;
+    public String getSecondSubcategoryId() {
+        return secondSubcategoryId;
     }
 
-    public void setSecondSubCategoryId(String secondSubCategoryId) {
-        this.secondSubCategoryId = secondSubCategoryId;
+    public void setSecondSubcategoryId(String secondSubcategoryId) {
+        this.secondSubcategoryId = secondSubcategoryId;
     }
-
+    private String secondSubcategoryId;
 }
