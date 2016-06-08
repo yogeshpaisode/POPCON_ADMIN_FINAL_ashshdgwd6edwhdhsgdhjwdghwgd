@@ -12,8 +12,8 @@
 
             <div class="form-group">
                 <label>Main Category Name</label>
-                <select class="form-control" ng-model="form.main_Category_id" ng-change="sort()">
-                    <option ng-repeat="l in list" value="{{l.id}}">{{l.name}}</option>
+                <select class="form-control" ng-model="form.mainCategoryId" ng-change="sort()">
+                    <option ng-repeat="l in list" value="{{l.mainCategoryId}}">{{l.name}}</option>
                 </select>
             </div><!--End of Select-->
             <div class="form-group">
@@ -31,7 +31,7 @@
                             $scope.sort = function () {
                                 var flag = true;
                                 angular.forEach($scope.subList, function (value) {
-                                    if (value.mainCategoryId == $scope.form.main_Category_id && flag) {
+                                    if (value.mainCategoryId == $scope.form.mainCategoryId && flag) {
                                         $scope.form.first_Sub_Category_id = value.id + "";
                                         flag = false;
                                     }
@@ -41,7 +41,7 @@
                                 $scope.result = "Processing...";
                                 $scope.list = MainCategory.query(function () {
                                     $scope.result = "Success : fetching list";
-                                    $scope.form.main_Category_id = $scope.list[0].id + "";
+                                    $scope.form.mainCategoryId = $scope.list[0].mainCategoryId + "";
                                 }, function () {
                                     $scope.result = "Error : fetching list";
                                 });
