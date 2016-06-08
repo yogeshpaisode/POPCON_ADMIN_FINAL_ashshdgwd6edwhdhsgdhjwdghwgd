@@ -12,7 +12,7 @@
 
             <div class="form-group">
                 <label>Main Category Name</label>
-                <select class="form-control" ng-model="form.mainCategoryId" ng-change="sort()">
+                <select class="form-control" ng-model="form.mainCategoryId" ng-change="sort(subList)">
                     <option ng-repeat="l in list" value="{{l.mainCategoryId}}">{{l.name}}</option>
                 </select>
             </div><!--End of Select-->
@@ -30,13 +30,45 @@
             <br><br>
             <h4>Status : <b>{{result}}</b></h4>
             <br>
+
+            <table class = "table">
+                <thead>
+                    <tr>
+                        <th>Sr.No</th>
+                        <th>First Category Name</th>
+                        <th>Main Category</th>
+                        <th>First Sub Category</th>
+                        <th>Update Action</th>
+                        <th>Delete Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="l in thirdList">
+                        <td>{{$index + 1}}</td>
+                        <td><input type="text" value="{{l.name}}" ng-model="l.secondSubCategoryName"></td>
+                        <td>
+                            <select class="form-control" ng-model="l.mainCategoryId" ng-change="sort(subList)">
+                                <option ng-repeat="l in list" value="{{l.mainCategoryId}}">{{l.name}}</option>
+                            </select>
+                        </td>
+                        <td>
+                            <select class="form-control" ng-model="l.firstSubcategoryId">
+                                <option ng-repeat="l in subList|filter:l.mainCategoryId" value="{{l.firstSubcategoryId}}">{{l.name}}</option>
+                            </select>
+                        </td>
+                        <td><button ng-click="put(l);">Update</button></td>
+                        <td><button ng-click="delete(l);">Delete</button></td>
+                    </tr>
+                </tbody>
+
+            </table>
         </section>
         <script>
                     app.controller("indexCtr", ["$scope", "$http", "MainCategory", "firstSubCategory", "secondSubCategory", "$timeout", function ($scope, $http, MainCategory, firstSubCategory, secondSubCategory, $timeout) {
                             $scope.form = new secondSubCategory();
-                            $scope.sort = function () {
+                            $scope.sort = function (obj) {
                                 var flag = true;
-                                angular.forEach($scope.subList, function (value) {
+                                angular.forEach(obj, function (value) {
                                     if ((value.mainCategoryId == $scope.form.mainCategoryId) && flag) {
                                         $scope.form.firstSubcategoryId = value.firstSubcategoryId + "";
                                         flag = false;
@@ -56,7 +88,7 @@
                                     $scope.result = "Success : fetching list";
                                     $scope.form.firstSubcategoryId = $scope.subList[0].firstSubcategoryId + "";
                                     $timeout(function () {
-                                        $scope.sort();
+                                        $scope.sort($scope.subList);
                                     }, 200);
                                 }, function (response) {
                                     $scope.result = "Error : fetching list";
