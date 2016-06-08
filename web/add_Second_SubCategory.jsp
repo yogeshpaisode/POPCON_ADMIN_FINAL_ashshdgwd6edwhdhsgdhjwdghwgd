@@ -61,6 +61,14 @@
                                 }, function (response) {
                                     $scope.result = "Error : fetching list";
                                 });
+
+                                $scope.thirdList = secondSubCategory.query(function (response) {
+                                    console.log(angular.toJson($scope.thirdList));
+                                    $scope.result = "Success : fetching list";
+                                }, function () {
+                                    $scope.result = "Error : fetching list";
+                                });
+
                             }; //End of GET
 
                             $scope.post = function () {
