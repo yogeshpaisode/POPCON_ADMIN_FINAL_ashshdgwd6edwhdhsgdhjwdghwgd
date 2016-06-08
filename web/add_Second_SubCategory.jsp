@@ -21,13 +21,19 @@
                 <select class="form-control" ng-model="form.firstSubcategoryId">
                     <option ng-repeat="l in subList|filter:form.mainCategoryId" value="{{l.firstSubcategoryId}}">{{l.name}}</option>
                 </select>
-            </div><!--End of Select-->
+            </div><!--End of Select-->            
+            <div class="form-group">
+                <label>Second Sub Category Name</label>
+                <input type="text" class="form-control" ng-model="form.second_Sub_Category_Name">
+            </div><!--End of Text Field-->
+            <button type="submit" class="btn btn-primary" ng-click="post();">Add Category</button>
+            <br><br>
             <h4>Status : <b>{{result}}</b></h4>
             <br>
         </section>
         <script>
-                    app.controller("indexCtr", ["$scope", "$http", "MainCategory", "firstSubCategory","$timeout",function ($scope, $http, MainCategory, firstSubCategory,$timeout) {
-                            $scope.form = new firstSubCategory();
+                    app.controller("indexCtr", ["$scope", "$http", "MainCategory", "firstSubCategory", "secondSubCategory", "$timeout", function ($scope, $http, MainCategory, firstSubCategory, secondSubCategory, $timeout) {
+                            $scope.form = new secondSubCategory();
                             $scope.sort = function () {
                                 var flag = true;
                                 angular.forEach($scope.subList, function (value) {
@@ -46,7 +52,7 @@
                                     $scope.result = "Error : fetching list";
                                 });
                                 $scope.subList = firstSubCategory.query(function (response) {
-                                    console.log($scope.subList);
+                                    //console.log($scope.subList);
                                     $scope.result = "Success : fetching list";
                                     $scope.form.firstSubcategoryId = $scope.subList[0].firstSubcategoryId + "";
                                     $timeout(function () {
@@ -56,6 +62,19 @@
                                     $scope.result = "Error : fetching list";
                                 });
                             }; //End of GET
+
+                            $scope.post = function () {
+                                $scope.result = "Processing...";
+                                console.log($scope.form);
+                                $scope.form.$save(function (res) {
+                                    $scope.result = "Success : Last Entry was added successfully..";
+                                    console.log(angular.toJson(res));
+                                }, function (res) {
+                                    $scope.result = "Error : Something Went wrong..";
+                                    console.log("Error:..");
+                                });
+                            } //End of POST
+
                         }]);
 
         </script>

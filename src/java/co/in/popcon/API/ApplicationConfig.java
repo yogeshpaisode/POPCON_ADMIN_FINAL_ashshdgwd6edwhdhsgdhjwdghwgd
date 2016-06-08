@@ -31,6 +31,7 @@ public class ApplicationConfig extends Application {
     private void addRestResourceClasses(Set<Class<?>> resources) {
         resources.add(co.in.popcon.API.First_Sub_Category_.class);
         resources.add(co.in.popcon.API.Main_Category_Resource.class);
+        resources.add(co.in.popcon.API.Second_Sub_Category_.class);
     }
     
 }

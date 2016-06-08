@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package co.in.popcon.test;
+package co.in.popcon.Beans;
 
 /**
  *
  * @author yogeshpaisode
  */
-public class Bin2 {
+public class First_Sub_Category_GET_ {
     private String firstSubcategoryId;
     private String name;
     private String mainCategoryId;

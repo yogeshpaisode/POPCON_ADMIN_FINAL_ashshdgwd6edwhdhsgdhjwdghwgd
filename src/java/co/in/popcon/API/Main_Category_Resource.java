@@ -8,7 +8,6 @@ package co.in.popcon.API;
 import co.in.popcon.hibernate.*;
 import co.in.popcon.service.Hibernate;
 import co.in.popcon.service.Serialization;
-import co.in.popcon.test.Bin;
 import flexjson.JSONSerializer;
 import java.io.IOException;
 import java.util.List;
@@ -24,7 +23,6 @@ import javax.ws.rs.core.MediaType;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 /**

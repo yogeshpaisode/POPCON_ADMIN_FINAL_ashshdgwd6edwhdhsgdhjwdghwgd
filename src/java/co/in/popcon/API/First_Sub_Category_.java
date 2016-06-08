@@ -21,14 +21,12 @@ import org.json.JSONObject;
 
 import co.in.popcon.service.Hibernate;
 import co.in.popcon.service.Serialization;
-import co.in.popcon.test.Bin;
-import co.in.popcon.test.Bin2;
 import flexjson.JSONSerializer;
 import java.util.ArrayList;
 import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
-
+import co.in.popcon.Beans.*;
 /**
  * REST Web Service
  *
@@ -54,12 +52,12 @@ public class First_Sub_Category_ extends Hibernate {
         List list = new ArrayList();
         Criteria cr = session.createCriteria(FirstSubcategory.class);
         for (Object o : cr.list()) {
-            Bin2 bin2 = new Bin2();
+            First_Sub_Category_GET_ bin = new First_Sub_Category_GET_();
             FirstSubcategory f = (FirstSubcategory) o;
-            bin2.setFirstSubcategoryId(f.getFirstSubcategoryId() + "");
-            bin2.setName(f.getName());
-            bin2.setMainCategoryId(f.getMainCategory().getMainCategoryId() + "");
-            list.add(bin2);
+            bin.setFirstSubcategoryId(f.getFirstSubcategoryId() + "");
+            bin.setName(f.getName());
+            bin.setMainCategoryId(f.getMainCategory().getMainCategoryId() + "");
+            list.add(bin);
         }
         JSONSerializer serializer = new JSONSerializer();
         closeHibernateConnection();
@@ -69,9 +67,9 @@ public class First_Sub_Category_ extends Hibernate {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Bin postJson(String param) {
+    public First_Sub_Category_POST_ postJson(String param) {
         FirstSubcategory firstSubcategory = null;
-        Bin bin = new Bin();
+        First_Sub_Category_POST_ bin=new First_Sub_Category_POST_();
         try {
             JSONObject json = new JSONObject(param); // json
             int mainCategoryId = Integer.parseInt(json.getString("mainCategoryId"));
