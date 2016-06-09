@@ -101,4 +101,27 @@ public class Second_Sub_Category_ extends Hibernate {
         transaction.commit();
         closeHibernateConnection();
     }
+
+    @PUT
+    @Path("/{secondSubcategoryId}")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public void updateData(@PathParam("secondSubcategoryId") int secondSubcategoryId, String param) throws JSONException {
+        JSONObject json = new JSONObject(param); // json
+        String name=json.getString("secondSubCategoryName");
+        int firstSubcategoryId=Integer.parseInt(json.getString("firstSubcategoryId"));
+        Criteria cr = session.createCriteria(FirstSubcategory.class);
+        cr.add(Restrictions.eq("firstSubcategoryId", firstSubcategoryId));
+        FirstSubcategory firstSubcategory=(FirstSubcategory)cr.list().get(0);
+        
+        cr = session.createCriteria(SecondSubcategory.class);
+        cr.add(Restrictions.eq("secondSubcategoryId", secondSubcategoryId));
+        SecondSubcategory s = (SecondSubcategory) cr.list().get(0);
+        s.setFirstSubcategory(firstSubcategory);
+        s.setName(name);
+        
+        session.save(s);
+        transaction.commit();
+        closeHibernateConnection();
+    }
 }

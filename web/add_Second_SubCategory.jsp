@@ -129,6 +129,14 @@
                                     $scope.result = "Error while Deleteing Last Entry...";
                                 });
                             }//End of DELETE
+                            $scope.put = function (obj) {
+                                $scope.result = "Processing...";
+                                obj.$update(function (succ) {
+                                    $scope.result = "Last Entry was Updated Successfully...";
+                                }, function (err) {
+                                    $scope.result = "Error while Updateing Last Entry...";
+                                });
+                            }//End of UPDATE
 
                         }]);
 
