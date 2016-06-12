@@ -11,7 +11,7 @@ and open the template in the editor.
         <%@ include file="/import/header.jsp"%>
     </head>
     <body ng-app="popcon" ng-controller="indexCtr" ng-cloak="" ng-init="get();" class="container">
-
+        <br>
         <section>
 
             <div class="form-group">
@@ -31,6 +31,22 @@ and open the template in the editor.
                 <select class="form-control" ng-model="mainForm.secondSubcategoryId">
                     <option ng-repeat="l in secondSubList|filter:mainForm.firstSubcategoryId" value="{{l.secondSubcategoryId}}">{{l.secondSubCategoryName}}</option>
                 </select>
+            </div><!--End of Select-->    
+            <div class="form-group">
+                <label>Search Text</label>
+                <textarea class="form-control" ng-model="mainForm.searchTag"></textarea>
+            </div><!--End of Select-->    
+            <div class="form-group">
+                <label>Product Detail</label>
+                <textarea class="form-control" ng-model="mainForm.productDetail"></textarea>
+            </div><!--End of Select-->    
+            <div class="form-group">
+                <label>Material Detail</label>
+                <textarea class="form-control" ng-model="mainForm.materialDetail"></textarea>
+            </div><!--End of Select-->    
+            <div class="form-group">
+                <label>Care</label>
+                <textarea class="form-control" ng-model="mainForm.care"></textarea>
             </div><!--End of Select-->    
         </section>
 
@@ -75,8 +91,6 @@ and open the template in the editor.
             </div>
         </div>
 
-
-        <button ng-click="pushAll();">Push all</button>
         {{mainForm}}
         <script>
                     app.directive('fileModel', ['$parse', function ($parse) {
@@ -101,7 +115,11 @@ and open the template in the editor.
                             $scope.size = [{type: "Small", stock: [], isSelected: false}, {type: "Medium", stock: [], isSelected: false}, {type: "Large", stock: [], isSelected: false}];
                             $scope.form = {images: []};
                             var imgIndex = 0;
-                            $scope.mainForm = [{"color": $scope.colorList}, {"sizeList": $scope.size}];
+                            $scope.mainForm = 
+                                {
+                                    "color": $scope.colorList,
+                                    "sizeList": $scope.size
+                                };
 
                             $scope.get = function () {
                                 $scope.mainList = MainCategory.query(function () {
@@ -117,9 +135,9 @@ and open the template in the editor.
                                 }, function (response) {
                                     $scope.result = "Error : fetching list";
                                 });
-                                
+
                                 $scope.secondSubList = secondSubCategory.query(function (response) {
-                                    console.log(angular.toJson($scope.secondSubList)+"Second");
+                                    console.log(angular.toJson($scope.secondSubList) + "Second");
                                     $scope.result = "Success : fetching list";
                                     $scope.mainForm.secondSubcategoryId = $scope.secondSubList[0].secondSubcategoryId + "";
                                 }, function (response) {
