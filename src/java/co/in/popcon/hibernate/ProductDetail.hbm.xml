@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Jun 12, 2016 11:09:54 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="co.in.popcon.hibernate.ProductDetail" table="product_Detail" catalog="popconco_popconco" optimistic-lock="version">
+        <id name="productDetailId" type="java.lang.Integer">
+            <column name="product_Detail_ID" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="firstSubcategory" class="co.in.popcon.hibernate.FirstSubcategory" fetch="select">
+            <column name="first_subcategory_ID" not-null="true" />
+        </many-to-one>
+        <many-to-one name="mainCategory" class="co.in.popcon.hibernate.MainCategory" fetch="select">
+            <column name="main_category_ID" not-null="true" />
+        </many-to-one>
+        <many-to-one name="secondSubcategory" class="co.in.popcon.hibernate.SecondSubcategory" fetch="select">
+            <column name="second_subcategory_ID" not-null="true" />
+        </many-to-one>
+        <property name="searchTag" type="string">
+            <column name="search_tag" length="65535" not-null="true" />
+        </property>
+        <property name="productDetail" type="string">
+            <column name="product_detail" length="65535" not-null="true" />
+        </property>
+        <property name="materialDetail" type="string">
+            <column name="material_detail" length="65535" not-null="true" />
+        </property>
+        <property name="care" type="string">
+            <column name="care" length="65535" not-null="true" />
+        </property>
+        <property name="sellingPrice" type="int">
+            <column name="selling_Price" not-null="true" />
+        </property>
+        <property name="displayPrice" type="int">
+            <column name="display_price" not-null="true" />
+        </property>
+        <set name="productByColors" table="product_by_Color" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="product_Detail_ID" not-null="true" />
+            </key>
+            <one-to-many class="co.in.popcon.hibernate.ProductByColor" />
+        </set>
+        <set name="productSizes" table="product_Size" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="product_Detail_ID" not-null="true" />
+            </key>
+            <one-to-many class="co.in.popcon.hibernate.ProductSize" />
+        </set>
+    </class>
+</hibernate-mapping>

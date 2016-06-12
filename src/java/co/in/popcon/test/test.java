@@ -5,6 +5,7 @@
  */
 package co.in.popcon.test;
 
+import co.in.popcon.Beans.Product_Color_ID_Track;
 import co.in.popcon.hibernate.SecondSubcategory;
 import co.in.popcon.service.Serialization;
 import flexjson.JSONSerializer;
@@ -18,6 +19,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import co.in.popcon.hibernate.*;
+import java.util.ArrayList;
 import org.hibernate.criterion.Restrictions;
 
 /**
@@ -32,6 +34,7 @@ public class test {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         JSONObject jSONObject = new JSONObject(json);
+        List colorList = new ArrayList();
 
         String searchTag = jSONObject.get("searchTag").toString();
         String productDetail = jSONObject.get("productDetail").toString();
@@ -73,16 +76,43 @@ public class test {
             ProductByColor byColor = new ProductByColor(productObj, color, title, hex);
             session.save(byColor);
 
+            colorList.add(new Product_Color_ID_Track(color, byColor));
+
             //Add Color Images
             JSONArray imageAry = colorObj.getJSONArray("images");
-            
+
             for (int j = 0; j < imageAry.length(); j++) {
                 JSONObject imgObj = imageAry.getJSONObject(i);
-                String name=imgObj.getString("name");
-                ProductByColorImages  byColorImages=new ProductByColorImages(byColor, name);
+                String name = imgObj.getString("name");
+                ProductByColorImages byColorImages = new ProductByColorImages(byColor, name);
                 session.save(byColorImages);
             }
 
+        }
+
+        for (int i = 0; i < sizeArray.length(); i++) {
+            JSONObject sizeObj=sizeArray.getJSONObject(i);
+            if(sizeObj.getBoolean("isSelected")){
+                String type=sizeObj.getString("type");
+                ProductSize productSize=new ProductSize(productObj, type);
+                session.save(productSize);
+                JSONArray stockAry=sizeObj.getJSONArray("stock");
+                
+                for(int j=0;j<stockAry.length();j++){
+                    JSONObject stockObj=stockAry.getJSONObject(j);
+                    String stockForColor=stockObj.getString("color");
+                    int stock=Integer.parseInt(stockObj.getString("count"));
+                    for(Object o:colorList){
+                        Product_Color_ID_Track track=(Product_Color_ID_Track)o;
+                        if(track.getName().equals(stockForColor)){
+                            ProductByColor byColor=track.getByColor();
+                            SizeStockByColor sizeStockByColor=new SizeStockByColor(productSize, byColor, stock);
+                            session.save(sizeStockByColor);
+                        }
+                    }
+                }
+                
+            }
         }
 
         transaction.commit();

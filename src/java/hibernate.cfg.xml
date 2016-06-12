@@ -7,8 +7,13 @@
     <property name="hibernate.connection.url">jdbc:mysql://popcon.co.in:3306/popconco_popconco?zeroDateTimeBehavior=convertToNull</property>
     <property name="hibernate.connection.username">popconco_popcon</property>
     <property name="hibernate.connection.password">Yogesh@318899</property>
-    <mapping resource="co/in/popcon/hibernate/FirstSubcategory.hbm.xml"/>
+    <mapping resource="co/in/popcon/hibernate/ProductByColor.hbm.xml"/>
+    <mapping resource="co/in/popcon/hibernate/ProductDetail.hbm.xml"/>
     <mapping resource="co/in/popcon/hibernate/SecondSubcategory.hbm.xml"/>
+    <mapping resource="co/in/popcon/hibernate/FirstSubcategory.hbm.xml"/>
+    <mapping resource="co/in/popcon/hibernate/ProductSize.hbm.xml"/>
+    <mapping resource="co/in/popcon/hibernate/ProductByColorImages.hbm.xml"/>
     <mapping resource="co/in/popcon/hibernate/MainCategory.hbm.xml"/>
+    <mapping resource="co/in/popcon/hibernate/SizeStockByColor.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>

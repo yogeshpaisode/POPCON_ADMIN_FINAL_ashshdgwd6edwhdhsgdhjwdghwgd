@@ -1,5 +1,5 @@
 package co.in.popcon.hibernate;
-// Generated Jun 3, 2016 7:34:59 PM by Hibernate Tools 4.3.1
+// Generated Jun 12, 2016 11:09:52 AM by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
@@ -13,6 +13,7 @@ public class MainCategory  implements java.io.Serializable {
 
      private Integer mainCategoryId;
      private String name;
+     private Set<ProductDetail> productDetails = new HashSet<ProductDetail>(0);
      private Set<FirstSubcategory> firstSubcategories = new HashSet<FirstSubcategory>(0);
 
     public MainCategory() {
@@ -22,8 +23,9 @@ public class MainCategory  implements java.io.Serializable {
     public MainCategory(String name) {
         this.name = name;
     }
-    public MainCategory(String name, Set<FirstSubcategory> firstSubcategories) {
+    public MainCategory(String name, Set<ProductDetail> productDetails, Set<FirstSubcategory> firstSubcategories) {
        this.name = name;
+       this.productDetails = productDetails;
        this.firstSubcategories = firstSubcategories;
     }
    
@@ -40,6 +42,13 @@ public class MainCategory  implements java.io.Serializable {
     
     public void setName(String name) {
         this.name = name;
+    }
+    public Set<ProductDetail> getProductDetails() {
+        return this.productDetails;
+    }
+    
+    public void setProductDetails(Set<ProductDetail> productDetails) {
+        this.productDetails = productDetails;
     }
     public Set<FirstSubcategory> getFirstSubcategories() {
         return this.firstSubcategories;

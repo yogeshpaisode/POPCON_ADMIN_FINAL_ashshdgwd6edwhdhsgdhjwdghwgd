@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated Jun 3, 2016 7:35:00 PM by Hibernate Tools 4.3.1 -->
+<!-- Generated Jun 12, 2016 11:09:54 AM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="co.in.popcon.hibernate.MainCategory" table="main_category" catalog="popconco_popconco" optimistic-lock="version">
         <id name="mainCategoryId" type="java.lang.Integer">
@@ -11,6 +11,12 @@
         <property name="name" type="string">
             <column name="name" length="65535" not-null="true" />
         </property>
+        <set name="productDetails" table="product_Detail" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="main_category_ID" not-null="true" />
+            </key>
+            <one-to-many class="co.in.popcon.hibernate.ProductDetail" />
+        </set>
         <set name="firstSubcategories" table="first_subcategory" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="main_category_ID" not-null="true" />

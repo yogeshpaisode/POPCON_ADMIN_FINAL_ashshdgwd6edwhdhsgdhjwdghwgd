@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Jun 12, 2016 11:09:54 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="co.in.popcon.hibernate.ProductByColor" table="product_by_Color" catalog="popconco_popconco" optimistic-lock="version">
+        <id name="productByColorId" type="java.lang.Integer">
+            <column name="product_by_Color_ID" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="productDetail" class="co.in.popcon.hibernate.ProductDetail" fetch="select">
+            <column name="product_Detail_ID" not-null="true" />
+        </many-to-one>
+        <property name="name" type="string">
+            <column name="name" length="65535" not-null="true" />
+        </property>
+        <property name="title" type="string">
+            <column name="title" length="65535" not-null="true" />
+        </property>
+        <property name="hex" type="string">
+            <column name="hex" length="65535" not-null="true" />
+        </property>
+        <set name="productByColorImageses" table="product_by_Color_Images" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="product_by_Color_ID" not-null="true" />
+            </key>
+            <one-to-many class="co.in.popcon.hibernate.ProductByColorImages" />
+        </set>
+        <set name="sizeStockByColors" table="size_Stock_by_Color" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="product_by_Color_ID" not-null="true" />
+            </key>
+            <one-to-many class="co.in.popcon.hibernate.SizeStockByColor" />
+        </set>
+    </class>
+</hibernate-mapping>
