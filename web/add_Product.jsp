@@ -12,25 +12,31 @@ and open the template in the editor.
     </head>
     <body ng-app="popcon" ng-controller="indexCtr" ng-cloak="" ng-init="get();" class="container">
 
-         <section>
+        <section>
 
             <div class="form-group">
                 <label>Main Category Name</label>
-                <select class="form-control" ng-model="form.mainCategoryId" ng-change="sort(subList)">
-                    <option ng-repeat="l in list" value="{{l.mainCategoryId}}">{{l.name}}</option>
+                <select class="form-control" ng-model="mainForm.mainCategoryId">
+                    <option ng-repeat="l in mainList" value="{{l.mainCategoryId}}">{{l.name}}</option>
                 </select>
             </div><!--End of Select-->
             <div class="form-group">
                 <label>First Sub Category Name</label>
-                <select class="form-control" ng-model="form.firstSubcategoryId">
-                    <option ng-repeat="l in subList|filter:form.mainCategoryId" value="{{l.firstSubcategoryId}}">{{l.name}}</option>
+                <select class="form-control" ng-model="mainForm.firstSubcategoryId">
+                    <option ng-repeat="l in firstSubList|filter:mainForm.mainCategoryId" value="{{l.firstSubcategoryId}}">{{l.name}}</option>
                 </select>
-            </div><!--End of Select-->            
-         </section>
-        
+            </div><!--End of Select-->    
+            <div class="form-group">
+                <label>Second Sub Category Name</label>
+                <select class="form-control" ng-model="mainForm.secondSubcategoryId">
+                    <option ng-repeat="l in secondSubList|filter:mainForm.firstSubcategoryId" value="{{l.secondSubcategoryId}}">{{l.secondSubCategoryName}}</option>
+                </select>
+            </div><!--End of Select-->    
+        </section>
+
         <hr>
-        
-        
+
+
         <div>
             Color: <input type="text" value="" ng-model="form.color"/>
             <br>
@@ -73,74 +79,93 @@ and open the template in the editor.
         <button ng-click="pushAll();">Push all</button>
         {{mainForm}}
         <script>
-                            app.directive('fileModel', ['$parse', function ($parse) {
-                                    return {
-                                        restrict: 'A',
-                                        link: function (scope, element, attrs) {
-                                            var model = $parse(attrs.fileModel);
-                                            var modelSetter = model.assign;
+                    app.directive('fileModel', ['$parse', function ($parse) {
+                            return {
+                                restrict: 'A',
+                                link: function (scope, element, attrs) {
+                                    var model = $parse(attrs.fileModel);
+                                    var modelSetter = model.assign;
 
-                                            element.bind('change', function () {
-                                                scope.$apply(function () {
-                                                    modelSetter(scope, element[0].files[0]);
-                                                });
-                                            });
-                                        }
-                                    };
-                                }])
-                            app.controller("indexCtr", ["$scope", "$http", "MainCategory", "firstSubCategory", "secondSubCategory", function ($scope, $http, MainCategory, firstSubCategory, secondSubCategory) {
-                                    var url = "http://upchar.esy.es/img/";
-
-                                    $scope.colorList = [];
-                                    $scope.size = [{type: "Small", stock: [], isSelected: false}, {type: "Medium", stock: [], isSelected: false}, {type: "Large", stock: [], isSelected: false}];
-                                    $scope.form = {images: []};
-                                    var imgIndex = 0;
-
-                                    $scope.get=function (){
-                                        
-                                    }
-
-                                    $scope.add = function () {
-                                        $scope.colorList.push($scope.form);
-                                        $scope.form = {images: []};
-                                        imgIndex = 0;
-                                    }
-                                    $scope.addImg = function (formObj) {
-                                        imgIndex++;
-                                        var obj = {name: $scope.myFile.name, uploadStatus: "Preparing..", path: ""};
-                                        var fileObj = $scope.myFile;
-                                        formObj.images.push(obj);
-                                        uploadFile(obj, fileObj);
-                                    }
-                                    var uploadFile = function (obj, fileObj) {
-                                        obj.uploadStatus = "Uploading..." + imgIndex;
-                                        var fd = new FormData();
-                                        fd.append('image', fileObj);
-
-                                        $http({
-                                            method: 'POST',
-                                            url: "http://upchar.esy.es/upload.php",
-                                            headers: {'Content-Type': undefined},
-                                            data: fd
-                                        }).then(function successCallback(response) {
-                                            obj.uploadStatus = "Uploaded Successfully..." + imgIndex;
-                                            obj.path = url + obj.name;
-                                        }, function errorCallback(response) {
-                                            obj.uploadStatus = "Error while Uploading..." + imgIndex;
+                                    element.bind('change', function () {
+                                        scope.$apply(function () {
+                                            modelSetter(scope, element[0].files[0]);
                                         });
-                                    }
+                                    });
+                                }
+                            };
+                        }])
+                    app.controller("indexCtr", ["$scope", "$http", "MainCategory", "firstSubCategory", "secondSubCategory", function ($scope, $http, MainCategory, firstSubCategory, secondSubCategory) {
+                            var url = "http://upchar.esy.es/img/";
 
-                                    $scope.deleteImg = function (index, list) {
-                                        list.splice(index, 1);
-                                    }
+                            $scope.colorList = [];
+                            $scope.size = [{type: "Small", stock: [], isSelected: false}, {type: "Medium", stock: [], isSelected: false}, {type: "Large", stock: [], isSelected: false}];
+                            $scope.form = {images: []};
+                            var imgIndex = 0;
+                            $scope.mainForm = [{"color": $scope.colorList}, {"sizeList": $scope.size}];
 
-                                    $scope.triggerFileBox = function () {
-                                        $("#file").click();
-                                    }
-                                    $scope.pushAll = function () {
-                                        $scope.mainForm = [{"color": $scope.colorList}, {"sizeList": $scope.size}];
-                                    }
-                                }]);
+                            $scope.get = function () {
+                                $scope.mainList = MainCategory.query(function () {
+                                    $scope.result = "Success : fetching list";
+                                    $scope.mainForm.mainCategoryId = $scope.mainList[0].mainCategoryId + "";
+                                }, function () {
+                                    $scope.result = "Error : fetching list";
+                                });
+                                $scope.firstSubList = firstSubCategory.query(function (response) {
+                                    //console.log($scope.subList);
+                                    $scope.result = "Success : fetching list";
+                                    $scope.mainForm.firstSubcategoryId = $scope.firstSubList[0].firstSubcategoryId + "";
+                                }, function (response) {
+                                    $scope.result = "Error : fetching list";
+                                });
+                                
+                                $scope.secondSubList = secondSubCategory.query(function (response) {
+                                    console.log(angular.toJson($scope.secondSubList)+"Second");
+                                    $scope.result = "Success : fetching list";
+                                    $scope.mainForm.secondSubcategoryId = $scope.secondSubList[0].secondSubcategoryId + "";
+                                }, function (response) {
+                                    $scope.result = "Error : fetching list";
+                                });
+
+                            }
+
+                            $scope.add = function () {
+                                $scope.colorList.push($scope.form);
+                                $scope.form = {images: []};
+                                imgIndex = 0;
+                            }
+                            $scope.addImg = function (formObj) {
+                                imgIndex++;
+                                var obj = {name: $scope.myFile.name, uploadStatus: "Preparing..", path: ""};
+                                var fileObj = $scope.myFile;
+                                formObj.images.push(obj);
+                                uploadFile(obj, fileObj);
+                            }
+                            var uploadFile = function (obj, fileObj) {
+                                obj.uploadStatus = "Uploading..." + imgIndex;
+                                var fd = new FormData();
+                                fd.append('image', fileObj);
+
+                                $http({
+                                    method: 'POST',
+                                    url: "http://upchar.esy.es/upload.php",
+                                    headers: {'Content-Type': undefined},
+                                    data: fd
+                                }).then(function successCallback(response) {
+                                    obj.uploadStatus = "Uploaded Successfully..." + imgIndex;
+                                    obj.path = url + obj.name;
+                                }, function errorCallback(response) {
+                                    obj.uploadStatus = "Error while Uploading..." + imgIndex;
+                                });
+                            }
+
+                            $scope.deleteImg = function (index, list) {
+                                list.splice(index, 1);
+                            }
+
+                            $scope.triggerFileBox = function () {
+                                $("#file").click();
+                            }
+                        }]);
         </script>
 
 
