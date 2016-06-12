@@ -47,7 +47,19 @@ and open the template in the editor.
             <div class="form-group">
                 <label>Care</label>
                 <textarea class="form-control" ng-model="mainForm.care"></textarea>
-            </div><!--End of Select-->    
+            </div><!--End of Select-->
+            <div class="form-group">
+                <label>Selling Price:</label>
+                <textarea class="form-control" ng-model="mainForm.sellingPrice"></textarea>
+            </div><!--End of Select-->
+            <div class="form-group">
+                <label>% Off:</label>
+                <textarea class="form-control" ng-model="mainForm.off"></textarea>
+            </div><!--End of Select-->
+            <div class="form-group">
+                <label>Display Price:</label>
+                <textarea class="form-control" ng-model="mainForm.displayPrice"></textarea>
+            </div><!--End of Select-->
         </section>
 
         <hr>
@@ -57,6 +69,8 @@ and open the template in the editor.
             Color: <input type="text" value="" ng-model="form.color"/>
             <br>
             Hex: <input type="text" value="" ng-model="form.hex"/>
+            <br>
+            Title: <input type="text" value="" ng-model="form.title"/>
             <br>
             <div ng-repeat="img in form.images">
                 <img src="{{img.path}}" style="width: 50px;height: 50px;"/>{{img.uploadStatus}}....<button ng-click="deleteImg($index, form.images);">Delete</button>
