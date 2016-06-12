@@ -10,7 +10,7 @@ and open the template in the editor.
         <meta charset="UTF-8">
         <%@ include file="/import/header.jsp"%>
     </head>
-    <body ng-app="myGIIS" ng-controller="indexCtr">
+    <body ng-app="popcon" ng-controller="indexCtr" ng-cloak="" ng-init="get();" class="container">
 
          <section>
 
@@ -73,8 +73,7 @@ and open the template in the editor.
         <button ng-click="pushAll();">Push all</button>
         {{mainForm}}
         <script>
-                    angular.module("myGIIS", [])
-                            .directive('fileModel', ['$parse', function ($parse) {
+                            app.directive('fileModel', ['$parse', function ($parse) {
                                     return {
                                         restrict: 'A',
                                         link: function (scope, element, attrs) {
@@ -89,13 +88,17 @@ and open the template in the editor.
                                         }
                                     };
                                 }])
-                            .controller("indexCtr", ["$scope", "$http", function ($scope, $http) {
+                            app.controller("indexCtr", ["$scope", "$http", "MainCategory", "firstSubCategory", "secondSubCategory", function ($scope, $http, MainCategory, firstSubCategory, secondSubCategory) {
                                     var url = "http://upchar.esy.es/img/";
 
                                     $scope.colorList = [];
                                     $scope.size = [{type: "Small", stock: [], isSelected: false}, {type: "Medium", stock: [], isSelected: false}, {type: "Large", stock: [], isSelected: false}];
                                     $scope.form = {images: []};
                                     var imgIndex = 0;
+
+                                    $scope.get=function (){
+                                        
+                                    }
 
                                     $scope.add = function () {
                                         $scope.colorList.push($scope.form);
