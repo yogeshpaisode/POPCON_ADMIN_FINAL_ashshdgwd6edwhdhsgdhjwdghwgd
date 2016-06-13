@@ -1,18 +1,58 @@
-<%@page import="flexjson.JSONSerializer"%>
-<%@page import="java.util.List"%>
-<%@page import="co.in.popcon.hibernate.SecondSubcategory"%>
-<%@page import="org.hibernate.Criteria"%>
-<%@page import="org.hibernate.Session"%>
-<%@page import="org.hibernate.cfg.AnnotationConfiguration"%>
-<%@page import="org.hibernate.SessionFactory"%>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-
-<%
-    SessionFactory sessionFactory = new AnnotationConfiguration().configure().buildSessionFactory();
-    Session s = sessionFactory.openSession();
-    Criteria cr = s.createCriteria(SecondSubcategory.class);
-    List results = cr.list();
-    JSONSerializer serializer = new JSONSerializer();
-    out.println(serializer.exclude("*.class").serialize(results));
-    sessionFactory.close();
-%>
+<!DOCTYPE html><html><head><title>Apache Tomcat/8.0.27 - Error report</title><style type="text/css">H1 {font-family:Tahoma,Arial,sans-serif;color:white;background-color:#525D76;font-size:22px;} H2 {font-family:Tahoma,Arial,sans-serif;color:white;background-color:#525D76;font-size:16px;} H3 {font-family:Tahoma,Arial,sans-serif;color:white;background-color:#525D76;font-size:14px;} BODY {font-family:Tahoma,Arial,sans-serif;color:black;background-color:white;} B {font-family:Tahoma,Arial,sans-serif;color:white;background-color:#525D76;} P {font-family:Tahoma,Arial,sans-serif;background:white;color:black;font-size:12px;}A {color : black;}A.name {color : black;}.line {height: 1px; background-color: #525D76; border: none;}</style> </head><body><h1>HTTP Status 500 - org.glassfish.jersey.server.ContainerException: org.json.JSONException: JSONArray[1] not found.</h1><div class="line"></div><p><b>type</b> Exception report</p><p><b>message</b> <u>org.glassfish.jersey.server.ContainerException: org.json.JSONException: JSONArray[1] not found.</u></p><p><b>description</b> <u>The server encountered an internal error that prevented it from fulfilling this request.</u></p><p><b>exception</b></p><pre>javax.servlet.ServletException: org.glassfish.jersey.server.ContainerException: org.json.JSONException: JSONArray[1] not found.
+	org.glassfish.jersey.servlet.WebComponent.service(WebComponent.java:392)
+	org.glassfish.jersey.servlet.ServletContainer.service(ServletContainer.java:382)
+	org.glassfish.jersey.servlet.ServletContainer.service(ServletContainer.java:345)
+	org.glassfish.jersey.servlet.ServletContainer.service(ServletContainer.java:220)
+	org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:52)
+	org.netbeans.modules.web.monitor.server.MonitorFilter.doFilter(MonitorFilter.java:393)
+</pre><p><b>root cause</b></p><pre>org.glassfish.jersey.server.ContainerException: org.json.JSONException: JSONArray[1] not found.
+	org.glassfish.jersey.servlet.internal.ResponseWriter.rethrow(ResponseWriter.java:249)
+	org.glassfish.jersey.servlet.internal.ResponseWriter.failure(ResponseWriter.java:231)
+	org.glassfish.jersey.server.ServerRuntime$Responder.process(ServerRuntime.java:436)
+	org.glassfish.jersey.server.ServerRuntime$1.run(ServerRuntime.java:265)
+	org.glassfish.jersey.internal.Errors$1.call(Errors.java:271)
+	org.glassfish.jersey.internal.Errors$1.call(Errors.java:267)
+	org.glassfish.jersey.internal.Errors.process(Errors.java:315)
+	org.glassfish.jersey.internal.Errors.process(Errors.java:297)
+	org.glassfish.jersey.internal.Errors.process(Errors.java:267)
+	org.glassfish.jersey.process.internal.RequestScope.runInScope(RequestScope.java:318)
+	org.glassfish.jersey.server.ServerRuntime.process(ServerRuntime.java:236)
+	org.glassfish.jersey.server.ApplicationHandler.handle(ApplicationHandler.java:1010)
+	org.glassfish.jersey.servlet.WebComponent.service(WebComponent.java:373)
+	org.glassfish.jersey.servlet.ServletContainer.service(ServletContainer.java:382)
+	org.glassfish.jersey.servlet.ServletContainer.service(ServletContainer.java:345)
+	org.glassfish.jersey.servlet.ServletContainer.service(ServletContainer.java:220)
+	org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:52)
+	org.netbeans.modules.web.monitor.server.MonitorFilter.doFilter(MonitorFilter.java:393)
+</pre><p><b>root cause</b></p><pre>org.json.JSONException: JSONArray[1] not found.
+	org.json.JSONArray.get(JSONArray.java:192)
+	org.json.JSONArray.getJSONObject(JSONArray.java:288)
+	co.in.popcon.API.Add_Product_.postJson(Add_Product_.java:107)
+	sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	java.lang.reflect.Method.invoke(Method.java:497)
+	org.glassfish.jersey.server.model.internal.ResourceMethodInvocationHandlerFactory$1.invoke(ResourceMethodInvocationHandlerFactory.java:81)
+	org.glassfish.jersey.server.model.internal.AbstractJavaResourceMethodDispatcher$1.run(AbstractJavaResourceMethodDispatcher.java:151)
+	org.glassfish.jersey.server.model.internal.AbstractJavaResourceMethodDispatcher.invoke(AbstractJavaResourceMethodDispatcher.java:171)
+	org.glassfish.jersey.server.model.internal.JavaResourceMethodDispatcherProvider$TypeOutInvoker.doDispatch(JavaResourceMethodDispatcherProvider.java:195)
+	org.glassfish.jersey.server.model.internal.AbstractJavaResourceMethodDispatcher.dispatch(AbstractJavaResourceMethodDispatcher.java:104)
+	org.glassfish.jersey.server.model.ResourceMethodInvoker.invoke(ResourceMethodInvoker.java:402)
+	org.glassfish.jersey.server.model.ResourceMethodInvoker.apply(ResourceMethodInvoker.java:349)
+	org.glassfish.jersey.server.model.ResourceMethodInvoker.apply(ResourceMethodInvoker.java:106)
+	org.glassfish.jersey.server.ServerRuntime$1.run(ServerRuntime.java:259)
+	org.glassfish.jersey.internal.Errors$1.call(Errors.java:271)
+	org.glassfish.jersey.internal.Errors$1.call(Errors.java:267)
+	org.glassfish.jersey.internal.Errors.process(Errors.java:315)
+	org.glassfish.jersey.internal.Errors.process(Errors.java:297)
+	org.glassfish.jersey.internal.Errors.process(Errors.java:267)
+	org.glassfish.jersey.process.internal.RequestScope.runInScope(RequestScope.java:318)
+	org.glassfish.jersey.server.ServerRuntime.process(ServerRuntime.java:236)
+	org.glassfish.jersey.server.ApplicationHandler.handle(ApplicationHandler.java:1010)
+	org.glassfish.jersey.servlet.WebComponent.service(WebComponent.java:373)
+	org.glassfish.jersey.servlet.ServletContainer.service(ServletContainer.java:382)
+	org.glassfish.jersey.servlet.ServletContainer.service(ServletContainer.java:345)
+	org.glassfish.jersey.servlet.ServletContainer.service(ServletContainer.java:220)
+	org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:52)
+	org.netbeans.modules.web.monitor.server.MonitorFilter.doFilter(MonitorFilter.java:393)
+</pre><p><b>note</b> <u>The full stack trace of the root cause is available in the Apache Tomcat/8.0.27 logs.</u></p><hr class="line"><h3>Apache Tomcat/8.0.27</h3></body></html>

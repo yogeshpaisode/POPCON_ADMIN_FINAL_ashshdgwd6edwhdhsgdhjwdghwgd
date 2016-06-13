@@ -33,4 +33,12 @@
                     }
             );
         }]);
+    app.factory("addProduct", ["$resource", function ($resource) {
+            return $resource("/webresources/add_Product/:productDetailId", {productDetailId: '@productDetailId'},
+                    {
+                        'update': {method: 'PUT', isArray: true},
+                        'delete': {method: 'DELETE', isArray: true}
+                    }
+            );
+        }]);
 </script>

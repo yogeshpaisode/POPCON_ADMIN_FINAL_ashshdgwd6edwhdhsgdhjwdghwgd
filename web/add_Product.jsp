@@ -12,7 +12,9 @@ and open the template in the editor.
     </head>
     <body ng-app="popcon" ng-controller="indexCtr" ng-cloak="" ng-init="get();" class="container">
         <%@ include file="header.jsp"%>
-
+        
+        <h3>{{result}}</h3>
+        
         <section>
 
             <div class="form-group">
@@ -51,15 +53,15 @@ and open the template in the editor.
             </div><!--End of Select-->
             <div class="form-group">
                 <label>Selling Price:</label>
-                <textarea class="form-control" ng-model="mainForm.sellingPrice"></textarea>
+                <input type="number" class="form-control" ng-model="mainForm.sellingPrice"/>
             </div><!--End of Select-->
             <div class="form-group">
                 <label>% Off:</label>
-                <textarea class="form-control" ng-model="mainForm.off"></textarea>
+                <input type="number" class="form-control" ng-model="mainForm.off">
             </div><!--End of Select-->
             <div class="form-group">
                 <label>Display Price:</label>
-                <textarea class="form-control" ng-model="mainForm.displayPrice"></textarea>
+                <input type="number" class="form-control" ng-model="mainForm.displayPrice"/>
             </div><!--End of Select-->
         </section>
 
@@ -164,19 +166,23 @@ and open the template in the editor.
                         <td>{{$index + 1}}</td>
                         <td>{{s.stock[$index].color = f.color}}</td>
                         <td><img src="{{f.images[0].path}}" style="width: 50px;height: 50px;"/></td>
-                        <td><input type="text" ng-model="s.stock[$index].count"></td>
+                        <td><input type="number" ng-model="s.stock[$index].stock"></td>
                     </tr>
                 </tbody>
             </table>
-        <!--
-            <div ng-repeat="f in colorList" ng-if="s.isSelected">
-                {{s.stock[$index].color = f.color}}
-                <img src="{{f.images[0].path}}" style="width: 50px;height: 50px;"/>..<input type="text" ng-model="s.stock[$index].count">
-            </div>
-        -->
+            <!--
+                <div ng-repeat="f in colorList" ng-if="s.isSelected">
+                    {{s.stock[$index].color = f.color}}
+                    <img src="{{f.images[0].path}}" style="width: 50px;height: 50px;"/>..<input type="text" ng-model="s.stock[$index].count">
+                </div>
+            -->
         </div>
-
-        {{mainForm}}
+        <hr>
+        <button ng-click="post();" class="btn btn-primary">Add Product</button>
+        {{result}}
+        
+        
+        <textarea ng-model="err"></textarea>
         <script>
                     app.directive('fileModel', ['$parse', function ($parse) {
                             return {
@@ -193,20 +199,21 @@ and open the template in the editor.
                                 }
                             };
                         }])
-                    app.controller("indexCtr", ["$scope", "$http", "MainCategory", "firstSubCategory", "secondSubCategory", function ($scope, $http, MainCategory, firstSubCategory, secondSubCategory) {
+                    app.controller("indexCtr", ["$scope", "$http", "MainCategory", "firstSubCategory", "secondSubCategory", "addProduct", function ($scope, $http, MainCategory, firstSubCategory, secondSubCategory, addProduct) {
                             var url = "http://upchar.esy.es/img/";
 
                             $scope.colorList = [];
                             $scope.size = [{type: "Small", stock: [], isSelected: false}, {type: "Medium", stock: [], isSelected: false}, {type: "Large", stock: [], isSelected: false}];
                             $scope.form = {images: []};
                             var imgIndex = 0;
-                            $scope.mainForm =
-                                    {
-                                        "color": $scope.colorList,
-                                        "sizeList": $scope.size
-                                    };
+                            $scope.mainForm = new addProduct();
+                            $scope.mainForm.color = $scope.colorList;
+                            $scope.mainForm.sizeList = $scope.size;
+
+                            //{"color": $scope.colorList,"sizeList": $scope.size}
 
                             $scope.get = function () {
+                                $scope.result = "Preparing....";
                                 $scope.mainList = MainCategory.query(function () {
                                     $scope.result = "Success : fetching list";
                                     $scope.mainForm.mainCategoryId = $scope.mainList[0].mainCategoryId + "";
@@ -228,7 +235,6 @@ and open the template in the editor.
                                 }, function (response) {
                                     $scope.result = "Error : fetching list";
                                 });
-
                             }
 
                             $scope.add = function () {
@@ -268,6 +274,20 @@ and open the template in the editor.
                             $scope.triggerFileBox = function () {
                                 $("#file").click();
                             }
+
+                            $scope.post = function () {
+                                $scope.result = "Processing....";
+                                $scope.mainForm.$save(function (res) {
+                                    $scope.result = "Last entry was added successfully ...." + angular.toJson(res);
+                                    $scope.mainForm = new addProduct();
+                                    $scope.mainForm.color = $scope.colorList;
+                                    $scope.mainForm.sizeList = $scope.size;
+                                }, function (res) {
+                                    $scope.result = "Error while adding Last entry....";
+                                    $scope.err=res.data;
+                                });
+                            }
+
                         }]);
         </script>
 
