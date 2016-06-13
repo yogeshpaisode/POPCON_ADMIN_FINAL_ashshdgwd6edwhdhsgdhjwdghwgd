@@ -73,14 +73,31 @@ and open the template in the editor.
             <br>
             Title: <input type="text" value="" ng-model="form.title"/>
             <br>
-            <div ng-repeat="img in form.images">
-                <img src="{{img.path}}" style="width: 50px;height: 50px;"/>{{img.uploadStatus}}....<button ng-click="deleteImg($index, form.images);">Delete</button>
-            </div>
+
+            <table class = "table">
+                <thead>
+                    <tr>
+                        <th>Sr.No.</th>
+                        <th>Image</th>
+                        <th>Uploading Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="img in form.images">
+                        <td>{{$index+1}}</td>
+                        <td><img src="{{img.path}}" style="width: 100px;height:100px;"/></td>
+                        <td>{{img.uploadStatus}}</td>
+                        <td><button ng-click="deleteImg($index, form.images);">Delete</button></td>
+                    </tr>
+                </tbody>
+            </table>
             <br>
             <input type="file" file-model="myFile" multiple="" id="file"/>
             <button ng-click="addImg(form);">Add Img</button>
             <br><br>
             <button ng-click="add();">Add</button>
+            <hr>
         </div>
         <br><br>
 
