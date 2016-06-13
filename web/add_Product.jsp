@@ -6,7 +6,7 @@ and open the template in the editor.
 -->
 <html>
     <head>
-        <title>TODO supply a title</title>
+        <title>Add Product</title>
         <meta charset="UTF-8">
         <%@ include file="/import/header.jsp"%>
     </head>
