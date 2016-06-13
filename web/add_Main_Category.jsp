@@ -7,7 +7,8 @@
         <title>Add Main Category</title>
     </head>
     <body ng-app="popcon" ng-controller="indexCtr" ng-cloak="" ng-init="get();" class="container">
-
+        <%@ include file="header.jsp"%>
+       
         <section>
             <div class="form-group">
                 <label>Enter Main Category Name Ex: Man</label>

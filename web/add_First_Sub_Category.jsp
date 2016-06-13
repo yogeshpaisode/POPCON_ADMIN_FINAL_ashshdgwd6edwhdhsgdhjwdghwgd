@@ -7,6 +7,7 @@
         <title>Add Main Category</title>
     </head>
     <body ng-app="popcon" ng-controller="indexCtr" ng-cloak="" ng-init="get();" class="container">
+        <%@ include file="header.jsp"%>
 
         <section>
 
@@ -55,9 +56,9 @@
         <script>
             app.controller("indexCtr", ["$scope", "$http", "MainCategory", "firstSubCategory", function ($scope, $http, MainCategory, firstSubCategory) {
                     $scope.form = new firstSubCategory();
-                    $scope.sort=function (l){
+                    $scope.sort = function (l) {
                         //console.log(l);
-                        l.mainCategoryId=l.mainCategoryId+"";
+                        l.mainCategoryId = l.mainCategoryId + "";
                     }
                     $scope.get = function () {
                         $scope.result = "Processing...";

@@ -11,7 +11,8 @@ and open the template in the editor.
         <%@ include file="/import/header.jsp"%>
     </head>
     <body ng-app="popcon" ng-controller="indexCtr" ng-cloak="" ng-init="get();" class="container">
-        <br>
+        <%@ include file="header.jsp"%>
+
         <section>
 
             <div class="form-group">
@@ -129,11 +130,11 @@ and open the template in the editor.
                             $scope.size = [{type: "Small", stock: [], isSelected: false}, {type: "Medium", stock: [], isSelected: false}, {type: "Large", stock: [], isSelected: false}];
                             $scope.form = {images: []};
                             var imgIndex = 0;
-                            $scope.mainForm = 
-                                {
-                                    "color": $scope.colorList,
-                                    "sizeList": $scope.size
-                                };
+                            $scope.mainForm =
+                                    {
+                                        "color": $scope.colorList,
+                                        "sizeList": $scope.size
+                                    };
 
                             $scope.get = function () {
                                 $scope.mainList = MainCategory.query(function () {
