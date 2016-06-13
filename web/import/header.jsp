@@ -1,6 +1,6 @@
 <link rel="stylesheet" href="css/bootstrap.min.css">
 <link rel="stylesheet" href="css/bootstrap-theme.min.css">
-
+<link rel="shortcut icon" href="http://www.popcon.co.in/images/favicon/favicon-popcon.ico">
 <script src="js/jquery.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script src="js/angular.min.js"></script>
