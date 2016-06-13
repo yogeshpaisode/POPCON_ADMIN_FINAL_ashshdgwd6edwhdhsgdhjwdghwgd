@@ -109,12 +109,12 @@ and open the template in the editor.
         <br><br>
 
         <div ng-repeat="f in colorList">
-            <h1># {{$index+1}}</h1>
+            <h1># {{$index + 1}} Color</h1>
             Color: <input type="text" value="{{f.color}}" ng-model="f.color"/>
             <br>
             Hex: <input type="text" value="{{f.hex}}" ng-model="f.hex"/>
             <br>
-            
+
             <table class = "table">
                 <thead>
                     <tr>
@@ -133,7 +133,7 @@ and open the template in the editor.
                     </tr>
                 </tbody>
             </table>
-            
+
             <!--
             <div ng-repeat="img in f.images">
                 <img src="{{img.path}}" style="width: 50px;height: 50px;"/>..<button ng-click="deleteImg($index, f.images);">Delete</button>
@@ -145,12 +145,35 @@ and open the template in the editor.
             <hr>
         </div>
 
+        <h2>Stock by Color Detail</h2>
         <div ng-repeat="s in size">
-            {{s.type}}..<input type="checkbox" ng-model="s.isSelected"><br>
+            <h3><input type="checkbox" ng-model="s.isSelected"> {{s.type}}</h3>
+
+            <table class = "table" ng-if="s.isSelected">
+                <thead>
+                    <tr>
+                        <th>Sr.No.</th>
+                        <th>Color Name</th>
+                        <th>Image</th>
+                        <th>Stock</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr ng-repeat="f in colorList">
+                        <td>{{$index + 1}}</td>
+                        <td>{{s.stock[$index].color = f.color}}</td>
+                        <td><img src="{{f.images[0].path}}" style="width: 50px;height: 50px;"/></td>
+                        <td><input type="text" ng-model="s.stock[$index].count"></td>
+                    </tr>
+                </tbody>
+            </table>
+        <!--
             <div ng-repeat="f in colorList" ng-if="s.isSelected">
                 {{s.stock[$index].color = f.color}}
                 <img src="{{f.images[0].path}}" style="width: 50px;height: 50px;"/>..<input type="text" ng-model="s.stock[$index].count">
             </div>
+        -->
         </div>
 
         {{mainForm}}
