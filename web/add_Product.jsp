@@ -85,7 +85,7 @@ and open the template in the editor.
                 </thead>
                 <tbody>
                     <tr ng-repeat="img in form.images">
-                        <td>{{$index+1}}</td>
+                        <td>{{$index + 1}}</td>
                         <td><img src="{{img.path}}" style="width: 100px;height:100px;"/></td>
                         <td>{{img.uploadStatus}}</td>
                         <td><button ng-click="deleteImg($index, form.images);">Delete</button></td>
@@ -93,25 +93,55 @@ and open the template in the editor.
                 </tbody>
             </table>
             <br>
-            <input type="file" file-model="myFile" multiple="" id="file"/>
-            <button ng-click="addImg(form);">Add Img</button>
+            <div class="row">
+                <div class="col-md-3">
+                    <input type="file" file-model="myFile" multiple="" id="file"/>
+                </div>
+                <div class="col-md-4">
+                    <button ng-click="addImg(form);" class="btn btn-primary">Add Img</button>
+                </div>
+            </div>
+
             <br><br>
-            <button ng-click="add();">Add</button>
+            <button ng-click="add();" class="btn btn-primary">Add Color</button>
             <hr>
         </div>
         <br><br>
 
         <div ng-repeat="f in colorList">
+            <h1># {{$index+1}}</h1>
             Color: <input type="text" value="{{f.color}}" ng-model="f.color"/>
             <br>
             Hex: <input type="text" value="{{f.hex}}" ng-model="f.hex"/>
             <br>
+            
+            <table class = "table">
+                <thead>
+                    <tr>
+                        <th>Sr.No.</th>
+                        <th>Image</th>
+                        <th>Uploading Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="img in f.images">
+                        <td>{{$index + 1}}</td>
+                        <td><img src="{{img.path}}" style="width: 100px;height:100px;"/></td>
+                        <td>{{img.uploadStatus}}</td>
+                        <td><button ng-click="deleteImg($index, f.images);">Delete</button></td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <!--
             <div ng-repeat="img in f.images">
                 <img src="{{img.path}}" style="width: 50px;height: 50px;"/>..<button ng-click="deleteImg($index, f.images);">Delete</button>
             </div>
+            -->
             <br>
-            <button ng-click="triggerFileBox();">select File</button>
-            <button ng-click="addImg(f);">Add Img</button>
+            <button ng-click="triggerFileBox();" class="btn btn-primary">select File</button>
+            <button ng-click="addImg(f);" class="btn btn-primary">Add Img</button>
             <hr>
         </div>
 
